@@ -5,15 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SQLConnector {
-	private String url = "jdbc:mysql://localhost/ql_covid";
-	private String user = "root";
-	private String password = "";
-	private Connection con;
+	private static String url = "jdbc:mysql://localhost/ql_covid";
+	private static String user = "root";
+	private static String password = "";
+	private static Connection con;
 	
-	public SQLConnector() {
+	protected SQLConnector() {
 	}
 	
-	public Connection getCon() throws SQLException{
+	protected static Connection getCon() throws SQLException{
 		con = DriverManager.getConnection(url, user, password);
 		return con;
 	}

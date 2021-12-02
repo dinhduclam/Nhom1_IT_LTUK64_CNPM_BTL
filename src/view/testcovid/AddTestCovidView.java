@@ -145,6 +145,18 @@ public class AddTestCovidView {
 	public void setActionSubmitButton(ActionListener a) {
 		submit.addActionListener(a);
 	}
+	
+	public void clear() {
+		hoTen.setText("");
+		id.setText("");
+		amTinh.setSelected(false);
+		duongTinh.setSelected(false);
+		testNhanh.setSelected(false);
+		testPCR.setSelected(false);
+		ngayTest.setText("");
+		hoTen.requestFocus();
+	}
+	
 	//done
 	public String getHoTen() throws Exception{
 		String name = hoTen.getText();

@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,7 +31,7 @@ public class AddTiemVaccineView {
 	private JSpinner lanTiem;
 
 	public AddTiemVaccineView() {
-		initialize();
+//		initialize();
 	}
 
 	public void initialize() {
@@ -151,9 +152,7 @@ public class AddTiemVaccineView {
 		loaiVaccine.addItem("Abdala");
 		loaiVaccine.addItem("Janssen");
 		
-		
 		frame.setVisible(true);
-		
 	}
 	//done
 	public void setActionSubmitButton(ActionListener a) {
@@ -183,66 +182,46 @@ public class AddTiemVaccineView {
 	public int getLanTiem() throws Exception {
 		int a = (int) lanTiem.getValue(); 
 		if (a <= 0)
-			throw new Exception("Chưa điền Địa chỉ cách ly");
+			throw new Exception("Lần tiêm phải là số dương");
 		return a;
 	}
 	
 	public String getLoaiVaccine() {
-		
+		return (String) (loaiVaccine.getSelectedItem());
 	}
-//	public int getLanTiem() throws Exception {
-//		String address = 
-//		if (address.equals("")) {
-//			diaChiCachLy.requestFocus();
-//			throw new Exception("Chưa điền Địa chỉ cách ly");
-//		}
-//		return address;
-//	}
 	
+	public String getLoVaccine() throws Exception {
+		return loVaccine.getText();
+	}
 	
-//	public Date getNgayBatDau() throws Exception{
-//		String dateString = lanTiem.getText();
-//		Date date = null;
-//
-//		if (dateString.equals("")) {
-//			lanTiem.requestFocus();
-//			throw new Exception("Chưa điền Ngày bắt đầu");
-//		}
-//		else {
-//			String[] d = dateString.split("[^0-9]");
-//			if (d.length != 3) throw new Exception("Sai định dạng (dd/mm/yyyy)");
-//			date = new Date(Integer.parseInt(d[2]), Integer.parseInt(d[1]), Integer.parseInt(d[0]));
-//		}
-//		return date;
-//	}
-//	//done
-//	public int getMucDoCachLy() throws Exception {
-//		String f = mucDoCachLy.getText();
-//		if (f.equals("")) {
-//			mucDoCachLy.requestFocus();
-//			throw new Exception("Chưa điền Mức độ cách ly");
-//		}
-//		else {
-//			if (f.charAt(0) != 'f' && f.charAt(0) != 'F') {
-//				throw new Exception("Sai định dạng (F1, F2, F3...)");
-//			}
-//			f = f.substring(1);
-//			try {
-//				return Integer.parseInt(f);
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//				throw new Exception("Sai định dạng (F1, F2, F3...)");
-//			}
-//		}
-//	}
-	//done
-	public String getDiaChiCachLy() throws Exception {
-		String address = donViTiemChung.getText();
-		if (address.equals("")) {
-			donViTiemChung.requestFocus();
-			throw new Exception("Chưa điền Địa chỉ cách ly");
+	public Date getNgayTiem() throws Exception {
+		String dateString = ngayTiem.getText();
+		Date date = null;
+
+		if (dateString.equals("")) {
+			ngayTiem.requestFocus();
+			throw new Exception("Chưa điền Ngày tiêm");
 		}
-		return address;
+		else {
+			String[] d = dateString.split("[^0-9]");
+			if (d.length != 3) throw new Exception("Sai định dạng (yyyy/MM/dd)");
+			try {
+				date = Date.valueOf(d[0] + "-" + d[1] + "-" + d[2]);
+			} catch (Exception e) {
+				throw new Exception("Ngày không hợp lệ (yyyy/MM/dd)");
+			}
+		}
+		return date;
+	}
+	
+	//done
+	public String getDonViTiemChung() throws Exception {
+		String dvi = donViTiemChung.getText();
+		if (dvi.equals("")) {
+			donViTiemChung.requestFocus();
+			throw new Exception("Chưa điền Đơn vị tiêm chủng");
+		}
+		return dvi;
 	}
 	//done
 	public void showMessage(String message) {

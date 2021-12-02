@@ -65,7 +65,8 @@ public class CachLyController {
 			// TODO Auto-generated method stub
 //			cachLyView.getSelectedRow();
 			try {
-				cachLyModel.delete((String) cachLyView.getSelectedInfo()[1]);
+				Object data[] = cachLyView.getSelectedInfo();
+				cachLyModel.delete((String) data[1], (java.sql.Date) data[2]);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				cachLyView.showMessage("Loi databse");

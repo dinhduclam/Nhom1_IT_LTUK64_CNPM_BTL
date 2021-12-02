@@ -12,9 +12,8 @@ import view.NhanKhauView;
 
 public class NhanKhauModel {
 	
-	SQLConnector connector = new SQLConnector();
-	NhanKhauView nhanKhauView = null; 
-	private final String databaseName = "ql_nhan_khau";
+	private NhanKhauView nhanKhauView = null; 
+	private final static String databaseName = "ql_nhan_khau";
 	// HoTen Id	GioiTinh NgaySinh SoDienThoai SoTheBHYT Email QuocTich ThuongTruTamTru	
 	private final String insertSQL = "INSERT INTO " + databaseName + " VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?)"; 
 	private final String updateSQL = "UPDATE " + databaseName + " SET HoTen = ?, GioiTinh = ?, NgaySinh = ?, SoDienThoai = ?, SoTheBHYT = ?, Email = ?, QuocTich = ?, ThuongTruTamTru = ? WHERE Id = ?";
@@ -26,7 +25,7 @@ public class NhanKhauModel {
 	}
 	
 	public void insert(Object[] data) throws SQLException{
-		Connection con = connector.getCon();
+		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(insertSQL);
 		// HoTen Id	GioiTinh NgaySinh SoDienThoai SoTheBHYT Email QuocTich ThuongTruTamTru
 		stmt.setString(1, (String) data[0]);
@@ -38,13 +37,18 @@ public class NhanKhauModel {
 		stmt.setString(7, (String) data[6]);
 		stmt.setString(8, (String) data[7]);
 		stmt.setString(9, (String) data[8]);
-		stmt.execute();
+		try {
+			stmt.execute();
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new SQLException("Đã tồn tại nhân khẩu có CCCD là " + data[1]);
+		}
 		con.close();
 		nhanKhauView.setDataForTable(NhanKhauController.colName, getData(nhanKhauView.getTextToFind()));
 	}
 	
 	public void update(Object[] data) throws SQLException{
-		Connection con = connector.getCon();
+		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(updateSQL);
 		// HoTen Id	GioiTinh NgaySinh SoDienThoai SoTheBHYT Email QuocTich ThuongTruTamTru
 		stmt.setString(1, (String) data[0]);
@@ -62,7 +66,7 @@ public class NhanKhauModel {
 	}
 	
 	public void delete(String id) throws SQLException {
-		Connection con = connector.getCon();
+		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(deleteSQL);
 		stmt.setString(1, id);
 		stmt.execute();
@@ -74,7 +78,7 @@ public class NhanKhauModel {
 		String query = selectAllSQL;
 		if (!condition.equals("")) query = selectAllSQL + " WHERE Id LIKE ? OR HoTen LIKE ?";
 		
-		Connection con = connector.getCon();
+		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(query);
 		if (!condition.equals("")) {
 			condition = "%" + condition + "%";
@@ -103,5 +107,13 @@ public class NhanKhauModel {
 		return data;
 	}
 	
+	public static String getHoTen(String id) throws SQLException{
+		Connection con = SQLConnector.getCon();
+		PreparedStatement stmt = con.prepareStatement("SELECT HoTen FROM " + databaseName + " WHERE Id = ?");
+		stmt.setString(1, id);
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()) return rs.getString("HoTen");
+		return "";
+	}
 
 }

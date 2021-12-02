@@ -12,8 +12,6 @@ import controller.TestCovidController;
 import view.TestCovidView;
 
 public class TestCovidModel {
-	
-	SQLConnector connector = new SQLConnector();
 	TestCovidView testCovidView = null; 
 	private final String databaseName = "ql_test_covid";
 	private final String insertSQL = "INSERT INTO " + databaseName + " VALUE (?, ?, ?, ?, ?)"; 
@@ -26,7 +24,7 @@ public class TestCovidModel {
 	}
 	
 	public void insert(Object[] data) throws SQLException{
-		Connection con = connector.getCon();
+		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(insertSQL);
 		//HoTen	Id	KetQua	LoaiTest	NgayTest	
 		stmt.setString(1, (String) data[0]);
@@ -34,6 +32,11 @@ public class TestCovidModel {
 		stmt.setString(3, (String) data[2]);
 		stmt.setString(4, (String) data[3]);
 		stmt.setDate(5, (Date) data[4]);
+		
+		String name = NhanKhauModel.getHoTen((String)data[1]);
+		if (!name.equals(""))
+			if (!data[0].equals(name)) throw new SQLException("Nhân khẩu có mã CCCD = " + data[1] + " tên là " + name);
+		
 		try {
 			stmt.execute();
 		} catch (SQLIntegrityConstraintViolationException e) {
@@ -46,7 +49,7 @@ public class TestCovidModel {
 	}
 	
 	public void update(Object[] data) throws SQLException{
-		Connection con = connector.getCon();
+		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(updateSQL);
 //		HoTen	Id	KetQua	LoaiTest	NgayTest	
 		
@@ -60,7 +63,7 @@ public class TestCovidModel {
 	}
 	
 	public void delete(String id) throws SQLException {
-		Connection con = connector.getCon();
+		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(deleteSQL);
 		stmt.setString(1, id);
 		stmt.execute();
@@ -72,7 +75,7 @@ public class TestCovidModel {
 		String query = selectAllSQL;
 		if (!condition.equals("")) query = selectAllSQL + " WHERE Id LIKE ? OR HoTen LIKE ?";
 		
-		Connection con = connector.getCon();
+		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(query);
 //		HoTen	Id	NgayBatDau	MucDoTestCovid	DiaChiTestCovid
 		if (!condition.equals("")) {

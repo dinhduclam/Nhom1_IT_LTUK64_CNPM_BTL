@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import controller.CachLyController;
 import view.CachLyView;
 
-public class CachLyModel {
+public class TiemVaccineModel {
 	CachLyView cachLyView = null; 
-	private final String databaseName = "ql_cach_ly";
-	private final String insertSQL = "INSERT INTO " + databaseName + " VALUE (?, ?, ?, ?, ?)"; 
-	private final String updateSQL = "UPDATE " + databaseName + " SET NgayBatDau = ?, MucDoCachLy = ?, DiaChiCachLy = ? WHERE Id = ? AND NgayBatDau = ?";
+	private final String databaseName = "ql_tiem_vaccine";
+	private final String insertSQL = "INSERT INTO " + databaseName + " VALUE (?, ?, ?, ?, ?, ?, ?)"; 
+	private final String updateSQL = "UPDATE " + databaseName + " SET LoaiVaccine = ?, LoVaccine = ?, NgayTiem = ?, DonViTiemChung = ? WHERE Id = ? AND LanTiem = ?";
 	private final String selectAllSQL = "SELECT * FROM " + databaseName;
-	private final String deleteSQL = "DELETE FROM " + databaseName + " WHERE Id = ? AND NgayBatDau = ?";
-	
-	public CachLyModel(CachLyView cachLyView) {
+	private final String deleteSQL = "DELETE FROM " + databaseName + " WHERE Id = ? AND LanTiem = ?";
+//	HoTen	Id	LanTiem	LoaiVaccine	LoVaccine	NgayTiem	DonViTiemChung	
+	public TiemVaccineModel(CachLyView cachLyView) {
 		this.cachLyView = cachLyView;
 	}
 	

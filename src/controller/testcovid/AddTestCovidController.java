@@ -30,6 +30,7 @@ public class AddTestCovidController {
 					addTestCovidView.getNgayTest()
 				};
 				testCovidModel.insert(data);
+				addTestCovidView.clear();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				addTestCovidView.showMessage(e.getMessage());
