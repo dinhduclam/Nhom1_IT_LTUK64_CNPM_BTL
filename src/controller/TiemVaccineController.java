@@ -9,8 +9,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
 
-import controller.TiemVaccine.AddTiemVaccineController;
-import controller.TiemVaccine.UpdateTiemVaccineController;
+import controller.tiemvaccine.AddTiemVaccineController;
+import controller.tiemvaccine.UpdateTiemVaccineController;
 import model.TiemVaccineModel;
 import view.TiemVaccineView;
 
@@ -22,7 +22,7 @@ public class TiemVaccineController {
 	private TiemVaccineView tiemVaccineView = new TiemVaccineView();
 	private TiemVaccineModel tiemVaccineModel = new TiemVaccineModel(tiemVaccineView);
 	
-	public static final String colName[] = {"Họ tên", "Số hộ chiếu/CCCD", "Lần tiêm", "Loại Vaccine", "Ngày tiêm", "Đơn vị tiêm chủng"};
+	public static final String colName[] = {"Họ tên", "Số hộ chiếu/CCCD", "Lần tiêm", "Loại Vaccine", "Lô vaccine", "Ngày tiêm", "Đơn vị tiêm chủng"};
 	//	HoTen	Id	LanTiem	LoaiVaccine	LoVaccine	NgayTiem	DonViTiemChung	
 	public TiemVaccineController() {
 		tiemVaccineView.initialize();
@@ -65,7 +65,7 @@ public class TiemVaccineController {
 			// TODO Auto-generated method stub
 //			TiemVaccineView.getSelectedRow();
 			try {
-				tiemVaccineModel.delete((String) tiemVaccineView.getSelectedInfo()[1]);
+				tiemVaccineModel.delete(tiemVaccineView.getSelectedInfo());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				tiemVaccineView.showMessage("Loi databse");
@@ -107,10 +107,5 @@ public class TiemVaccineController {
 		
 	}
 	
-	public static void main(String[] args) {
-		new TiemVaccineController();
-//		TiemVaccine.add();
-	}
-	
-	
+
 }

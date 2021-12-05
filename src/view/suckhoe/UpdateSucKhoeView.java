@@ -1,4 +1,4 @@
-package view.tiemvaccine;
+package view.suckhoe;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,30 +7,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 
-public class AddTiemVaccineView {
+public class UpdateSucKhoeView {
 
 	private JFrame frame;
 	private JTextField hoTen;
 	private JTextField id;
-	private JTextField donViTiemChung;
 	private JButton submit;
-	private JTextField loVaccine;
-	private JTextField ngayTiem;
-	private JComboBox<String> loaiVaccine;
-	private JSpinner lanTiem;
+	private JTextField ngayTest;
+	private JRadioButton amTinh, duongTinh, testNhanh, testPCR;
 
-	public AddTiemVaccineView() {
+	public UpdateSucKhoeView() {
 //		initialize();
 	}
 
@@ -40,7 +37,7 @@ public class AddTiemVaccineView {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("THÊM THÔNG TIN TIÊM VACCINE");
+		JLabel lblNewLabel = new JLabel("THÊM THÔNG TIN TEST COVID");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(134, 11, 338, 34);
@@ -78,24 +75,13 @@ public class AddTiemVaccineView {
 		lblNewLabel_2_1.setBounds(10, 123, 148, 20);
 		frame.getContentPane().add(lblNewLabel_2_1);
 		
-		JLabel lblNewLabel_1_4 = new JLabel("Lần tiêm:");
+		JLabel lblNewLabel_1_4 = new JLabel("Kết quả:");
 		lblNewLabel_1_4.setBounds(10, 154, 148, 20);
 		frame.getContentPane().add(lblNewLabel_1_4);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Loại vaccine:");
+		JLabel lblNewLabel_1_1_1 = new JLabel("Loại test:");
 		lblNewLabel_1_1_1.setBounds(335, 154, 148, 20);
 		frame.getContentPane().add(lblNewLabel_1_1_1);
-		
-		JLabel lblNewLabel_1_2_1 = new JLabel("Đơn vị tiêm chủng:");
-		lblNewLabel_1_2_1.setBounds(10, 215, 148, 20);
-		frame.getContentPane().add(lblNewLabel_1_2_1);
-		
-		donViTiemChung = new JTextField();
-		donViTiemChung.setBackground(UIManager.getColor("TextField.disabledBackground"));
-		donViTiemChung.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		donViTiemChung.setColumns(10);
-		donViTiemChung.setBounds(155, 215, 452, 20);
-		frame.getContentPane().add(donViTiemChung);
 		
 		submit = new JButton("Submit");
 		submit.setContentAreaFilled(false);
@@ -114,60 +100,60 @@ public class AddTiemVaccineView {
 		});
 		frame.getContentPane().add(close);
 		
-		JLabel lblNewLabel_1_4_1 = new JLabel("Lô vaccine:");
-		lblNewLabel_1_4_1.setBounds(10, 185, 148, 20);
+		JLabel lblNewLabel_1_4_1 = new JLabel("Ngày test (yyyy/MM/dd):");
+		lblNewLabel_1_4_1.setBounds(10, 210, 148, 20);
 		frame.getContentPane().add(lblNewLabel_1_4_1);
 		
-		loVaccine = new JTextField();
-		loVaccine.setColumns(10);
-		loVaccine.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		loVaccine.setBackground(SystemColor.menu);
-		loVaccine.setBounds(155, 185, 127, 20);
-		frame.getContentPane().add(loVaccine);
+		ngayTest = new JTextField();
+		ngayTest.setColumns(10);
+		ngayTest.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		ngayTest.setBackground(SystemColor.menu);
+		ngayTest.setBounds(155, 210, 127, 20);
+		frame.getContentPane().add(ngayTest);
 		
-		ngayTiem = new JTextField();
-		ngayTiem.setColumns(10);
-		ngayTiem.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		ngayTiem.setBackground(SystemColor.menu);
-		ngayTiem.setBounds(480, 185, 127, 20);
-		frame.getContentPane().add(ngayTiem);
+		amTinh = new JRadioButton("Âm tính");
+		amTinh.setBounds(155, 150, 109, 23);
+		frame.getContentPane().add(amTinh);
 		
-		JLabel lblNewLabel_1_1_1_1 = new JLabel("Ngày tiêm:");
-		lblNewLabel_1_1_1_1.setBounds(335, 185, 148, 20);
-		frame.getContentPane().add(lblNewLabel_1_1_1_1);
+		duongTinh = new JRadioButton("Dương tính");
+		duongTinh.setBounds(155, 176, 109, 23);
+		frame.getContentPane().add(duongTinh);
 		
-		lanTiem = new JSpinner();
-		lanTiem.setBounds(155, 154, 31, 20);
-		frame.getContentPane().add(lanTiem);
+		ButtonGroup kq = new ButtonGroup();
+		kq.add(amTinh);
+		kq.add(duongTinh);
 		
-		loaiVaccine = new JComboBox<String>();
-		loaiVaccine.setBounds(434, 154, 176, 20);
-		frame.getContentPane().add(loaiVaccine);
-		loaiVaccine.addItem("AstraZeneca");
-		loaiVaccine.addItem("Pfizer/BioNTech");
-		loaiVaccine.addItem("Sputnik V");
-		loaiVaccine.addItem("Vero Cell");
-		loaiVaccine.addItem("Moderna");
-		loaiVaccine.addItem("Hayat-Vax");
-		loaiVaccine.addItem("Abdala");
-		loaiVaccine.addItem("Janssen");
+		testNhanh = new JRadioButton("Test nhanh");
+		testNhanh.setBounds(480, 153, 109, 23);
+		frame.getContentPane().add(testNhanh);
+		
+		testPCR = new JRadioButton("PCR");
+		testPCR.setBounds(480, 181, 109, 23);
+		frame.getContentPane().add(testPCR);
+		
+		ButtonGroup loaiTest = new ButtonGroup();
+		loaiTest.add(testNhanh);
+		loaiTest.add(testPCR);
+		
+		hoTen.setEditable(false);
+		id.setEditable(false);
 		
 		frame.setVisible(true);
+		
 	}
 	//done
 	public void setActionSubmitButton(ActionListener a) {
 		submit.addActionListener(a);
 	}
 	
-	//done
-	public void clear() {
-		hoTen.setText("");
-		id.setText("");
-		lanTiem.setValue(1);
-		loaiVaccine.setSelectedIndex(0);
-		loVaccine.setText("");
-		ngayTiem.setText("");
-		donViTiemChung.setText("");
+	public void setData(Object[] data) {
+		hoTen.setText((String) data[0]);
+		id.setText((String) data[1]);
+		if (data[2].equals("Dương tính")) duongTinh.setSelected(true);
+		else amTinh.setSelected(true);
+		if (data[3].equals("Test Nhanh")) testNhanh.setSelected(true);
+		else testPCR.setSelected(true);
+		ngayTest.setText(data[4].toString());
 		hoTen.requestFocus();
 	}
 	//done
@@ -189,30 +175,34 @@ public class AddTiemVaccineView {
 		}
 		return cccd;
 	}
-	//done
-	//done
-	public int getLanTiem() throws Exception {
-		int a = (int) lanTiem.getValue(); 
-		if (a <= 0)
-			throw new Exception("Lần tiêm phải là số dương");
-		return a;
+	
+	public String getKetQua() throws Exception {
+		try{
+			if (amTinh.isSelected()) return "Âm tính";
+			if (duongTinh.isSelected()) return "Dương tính";
+			throw new Exception();
+		} catch (Exception e){
+			throw new Exception("Chưa chọn Kết quả");
+		}
 	}
 	
-	public String getLoaiVaccine() {
-		return (String) (loaiVaccine.getSelectedItem());
+	public String getLoaiTest() throws Exception {
+		try{
+			if (testNhanh.isSelected()) return "Test nhanh";
+			if (testPCR.isSelected()) return "PCR";
+			throw new Exception();
+		} catch (Exception e){
+			throw new Exception("Chưa chọn Loại test");
+		}
 	}
 	
-	public String getLoVaccine() throws Exception {
-		return loVaccine.getText();
-	}
-	
-	public Date getNgayTiem() throws Exception {
-		String dateString = ngayTiem.getText();
+	public Date getNgayTest() throws Exception{
+		String dateString = ngayTest.getText();
 		Date date = null;
 
 		if (dateString.equals("")) {
-			ngayTiem.requestFocus();
-			throw new Exception("Chưa điền Ngày tiêm");
+			ngayTest.requestFocus();
+			throw new Exception("Chưa điền Ngày test");
 		}
 		else {
 			String[] d = dateString.split("[^0-9]");
@@ -225,22 +215,14 @@ public class AddTiemVaccineView {
 		}
 		return date;
 	}
-	
-	//done
-	public String getDonViTiemChung() throws Exception {
-		String dvi = donViTiemChung.getText();
-		if (dvi.equals("")) {
-			donViTiemChung.requestFocus();
-			throw new Exception("Chưa điền Đơn vị tiêm chủng");
-		}
-		return dvi;
-	}
+
 	//done
 	public void showMessage(String message) {
 		JOptionPane.showMessageDialog(frame, message);
 	}
 	
-	public static void main(String[] args) {
-		new AddTiemVaccineView();
+	public void dispose() {
+		frame.dispose();
 	}
+
 }

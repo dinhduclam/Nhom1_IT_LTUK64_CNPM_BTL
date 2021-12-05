@@ -27,7 +27,7 @@ public class CachLyView {
 	private JTable table;
 	private DefaultTableModel model;
 	private JTextField textFind;
-	private JButton btnAdd, btnUpdate, btnDelete, btnClose;
+	private JButton btnAdd, btnUpdate, btnDelete, btnClose, btnView;
 	
 	/**
 	 * @wbp.parser.entryPoint
@@ -65,17 +65,17 @@ public class CachLyView {
 		
 		btnAdd = new JButton("Thêm");
 		btnAdd.setContentAreaFilled(false);
-		btnAdd.setBounds(10, 338, 256, 38);
+		btnAdd.setBounds(10, 338, 144, 38);
 		frame.getContentPane().add(btnAdd);
 		
 		btnUpdate = new JButton("Sửa");
 		btnUpdate.setContentAreaFilled(false);
-		btnUpdate.setBounds(10, 387, 123, 38);
+		btnUpdate.setBounds(164, 338, 144, 38);
 		frame.getContentPane().add(btnUpdate);
 		
 		btnDelete = new JButton("Xóa");
 		btnDelete.setContentAreaFilled(false);
-		btnDelete.setBounds(143, 387, 123, 38);
+		btnDelete.setBounds(164, 387, 144, 38);
 		frame.getContentPane().add(btnDelete);
 		
 		btnClose = new JButton("Close");
@@ -93,6 +93,11 @@ public class CachLyView {
 		JLabel lblNewLabel_1 = new JLabel("Tìm kiếm (Bằng Tên hoặc ID):");
 		lblNewLabel_1.setBounds(483, 338, 172, 35);
 		frame.getContentPane().add(lblNewLabel_1);
+		
+		btnView = new JButton("Xem chi tiết");
+		btnView.setContentAreaFilled(false);
+		btnView.setBounds(10, 387, 144, 38);
+		frame.getContentPane().add(btnView);
 		
 		frame.setVisible(true);
 	}
@@ -126,6 +131,10 @@ public class CachLyView {
 	
 	public void setActionUpdateButton(ActionListener action) {
 		btnUpdate.addActionListener(action);
+	}
+	
+	public void setActionViewButton(ActionListener action) {
+		btnView.addActionListener(action);
 	}
 	
 	public void setActionDeleteButton(ActionListener action) {

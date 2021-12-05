@@ -98,8 +98,4 @@ public class NhanKhauController {
 		}
 		
 	}
-	
-	public static void main(String[] args) {
-		NhanKhauController nhankhau = new NhanKhauController();
-	}
 }

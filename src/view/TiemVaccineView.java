@@ -19,7 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controller.CachLyController;
+import controller.TiemVaccineController;
 
 public class TiemVaccineView {
 
@@ -109,8 +109,8 @@ public class TiemVaccineView {
 	public Object[] getSelectedInfo() throws Exception{
 		int selectedRow = table.getSelectedRow();
 		if (selectedRow == -1) throw new Exception("Chưa chọn thông tin"); 
-		Object[] rowData = new Object[CachLyController.colName.length];
-		for (int i=0; i<CachLyController.colName.length; i++) {
+		Object[] rowData = new Object[TiemVaccineController.colName.length];
+		for (int i=0; i<TiemVaccineController.colName.length; i++) {
 			rowData[i] = table.getValueAt(table.getSelectedRow(), i);
 		}
 		return rowData;

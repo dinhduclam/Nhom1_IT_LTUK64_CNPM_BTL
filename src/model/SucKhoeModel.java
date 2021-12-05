@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import controller.TestCovidController;
 import view.TestCovidView;
 
-public class TestCovidModel {
+public class SucKhoeModel {
 	TestCovidView testCovidView = null; 
 	private static final String databaseName = "ql_test_covid";
 	private final String insertSQL = "INSERT INTO " + databaseName + " VALUE (?, ?, ?, ?, ?)"; 
@@ -19,7 +19,7 @@ public class TestCovidModel {
 	private final String selectAllSQL = "SELECT * FROM " + databaseName;
 	private final String deleteSQL = "DELETE FROM " + databaseName + " WHERE Id = ? AND NgayTest = ?";
 	
-	public TestCovidModel(TestCovidView testCovidView) {
+	public SucKhoeModel(TestCovidView testCovidView) {
 		this.testCovidView = testCovidView;
 	}
 	

@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 
-public class AddTiemVaccineView {
+public class UpdateTiemVaccineView {
 
 	private JFrame frame;
 	private JTextField hoTen;
@@ -30,7 +30,7 @@ public class AddTiemVaccineView {
 	private JComboBox<String> loaiVaccine;
 	private JSpinner lanTiem;
 
-	public AddTiemVaccineView() {
+	public UpdateTiemVaccineView() {
 //		initialize();
 	}
 
@@ -152,6 +152,7 @@ public class AddTiemVaccineView {
 		loaiVaccine.addItem("Abdala");
 		loaiVaccine.addItem("Janssen");
 		
+		lanTiem.setEnabled(false);
 		frame.setVisible(true);
 	}
 	//done
@@ -159,17 +160,17 @@ public class AddTiemVaccineView {
 		submit.addActionListener(a);
 	}
 	
-	//done
-	public void clear() {
-		hoTen.setText("");
-		id.setText("");
-		lanTiem.setValue(1);
-		loaiVaccine.setSelectedIndex(0);
-		loVaccine.setText("");
-		ngayTiem.setText("");
-		donViTiemChung.setText("");
+	public void setData(Object[] data) {
+		hoTen.setText((String) data[0]);
+		id.setText((String) data[1]);
+		lanTiem.setValue(data[2]);
+		loaiVaccine.setSelectedItem(data[3]);
+		loVaccine.setText((String) data[4]);
+		ngayTiem.setText(data[5].toString());
+		donViTiemChung.setText((String) data[6]);
 		hoTen.requestFocus();
 	}
+	
 	//done
 	public String getHoTen() throws Exception{
 		String name = hoTen.getText();
@@ -235,12 +236,14 @@ public class AddTiemVaccineView {
 		}
 		return dvi;
 	}
+
 	//done
 	public void showMessage(String message) {
 		JOptionPane.showMessageDialog(frame, message);
 	}
 	
-	public static void main(String[] args) {
-		new AddTiemVaccineView();
+	public void dispose() {
+		frame.dispose();
 	}
+
 }

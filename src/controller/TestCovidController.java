@@ -9,8 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
 
-import controller.cachly.AddCachLyController;
-import controller.cachly.UpdateCachLyController;
 import controller.testcovid.AddTestCovidController;
 import controller.testcovid.UpdateTestCovidController;
 import model.TestCovidModel;
@@ -67,7 +65,7 @@ public class TestCovidController {
 			// TODO Auto-generated method stub
 //			testCovidView.getSelectedRow();
 			try {
-				testCovidModel.delete((String) testCovidView.getSelectedInfo()[1]);
+				testCovidModel.delete(testCovidView.getSelectedInfo());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				testCovidView.showMessage("Loi databse");

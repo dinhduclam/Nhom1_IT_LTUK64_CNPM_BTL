@@ -19,7 +19,6 @@ import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controller.CachLyController;
 import controller.NhanKhauController;
 
 public class NhanKhauView {

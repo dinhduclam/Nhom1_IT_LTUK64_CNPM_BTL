@@ -28,6 +28,7 @@ public class NhanKhauModel {
 		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(insertSQL);
 		// HoTen Id	GioiTinh NgaySinh SoDienThoai SoTheBHYT Email QuocTich ThuongTruTamTru
+		if (!NhanKhauModel.getHoTen((String)data[1]).equals("")) throw new SQLException("Đã tồn tại nhân khẩu có CCCD là " + data[1]);
 		stmt.setString(1, (String) data[0]);
 		stmt.setString(2, (String) data[1]);
 		stmt.setString(3, (String) data[2]);

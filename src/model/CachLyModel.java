@@ -15,7 +15,7 @@ public class CachLyModel {
 	CachLyView cachLyView = null; 
 	private final String databaseName = "ql_cach_ly";
 	private final String insertSQL = "INSERT INTO " + databaseName + " VALUE (?, ?, ?, ?, ?)"; 
-	private final String updateSQL = "UPDATE " + databaseName + " SET NgayBatDau = ?, MucDoCachLy = ?, DiaChiCachLy = ? WHERE Id = ? AND NgayBatDau = ?";
+	private final String updateSQL = "UPDATE " + databaseName + " SET NgayBatDau = ?, MucDoCachLy = ?, DiaChiCachLy = ? WHERE Id = ?";
 	private final String selectAllSQL = "SELECT * FROM " + databaseName;
 	private final String deleteSQL = "DELETE FROM " + databaseName + " WHERE Id = ? AND NgayBatDau = ?";
 	
@@ -60,11 +60,11 @@ public class CachLyModel {
 		cachLyView.setDataForTable(CachLyController.colName, getData(cachLyView.getTextToFind()));
 	}
 	
-	public void delete(String id, Date ngayBatDau) throws SQLException {
+	public void delete(Object[] data) throws SQLException {
 		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(deleteSQL);
-		stmt.setString(1, id);
-		stmt.setDate(2, ngayBatDau);
+		stmt.setString(1, (String) data[1]);
+		stmt.setDate(2, (Date) data[2]);
 		stmt.execute();
 		con.close();
 		cachLyView.setDataForTable(CachLyController.colName, getData(cachLyView.getTextToFind()));
@@ -85,13 +85,18 @@ public class CachLyModel {
 		ResultSet rs = stmt.executeQuery();
 		ArrayList<Object[]> data = new ArrayList<>();
 		while (rs.next()) {
-			Object[] row = new Object[6];
-			row[0] = rs.getString("HoTen");
-			row[1] = rs.getString("Id");
-			row[2] = rs.getDate("NgayBatDau");
-//			System.out.println(((Date) row[2]));
-			row[3] = rs.getInt("MucDoCachLy");
-			row[4] = rs.getString("DiaChiCachLy");
+			ArrayList<Object[]> testCovidData = TestCovidModel.getVaccineInfo(rs.getString("Id"), rs.getDate("NgayBatDau").toString());
+			String testCovid = "";
+			if (testCovidData.size() == 0) testCovid = "Chưa test";
+			else testCovid = "Đã test";
+			Object[] row = {
+				rs.getString("HoTen"),
+				rs.getString("Id"),
+				rs.getDate("NgayBatDau"),
+				rs.getInt("MucDoCachLy"),
+				rs.getString("DiaChiCachLy"),
+				testCovid
+			};
 			data.add(row);
 		}
 		con.close();

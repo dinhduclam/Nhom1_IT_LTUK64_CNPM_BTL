@@ -1,25 +1,16 @@
 package view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
-import java.awt.Color;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.border.MatteBorder;
-import javax.swing.JTextArea;
-import java.awt.Cursor;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class MainView {
 
@@ -135,5 +126,8 @@ public class MainView {
 	}
 	public void setActionThongKe(ActionListener action) {
 		btnThongKe.addActionListener(action);
+	}
+	public void showMessage(String message) {
+		JOptionPane.showMessageDialog(frame, message);
 	}
 }
