@@ -21,8 +21,6 @@ import view.TiemVaccineView;
 public class TiemVaccineController {
 	private TiemVaccineView tiemVaccineView = new TiemVaccineView();
 	private TiemVaccineModel tiemVaccineModel = new TiemVaccineModel(tiemVaccineView);
-	
-	public static final String colName[] = {"Họ tên", "Số hộ chiếu/CCCD", "Lần tiêm", "Loại Vaccine", "Lô vaccine", "Ngày tiêm", "Đơn vị tiêm chủng"};
 	//	HoTen	Id	LanTiem	LoaiVaccine	LoVaccine	NgayTiem	DonViTiemChung	
 	public TiemVaccineController() {
 		tiemVaccineView.initialize();
@@ -31,10 +29,10 @@ public class TiemVaccineController {
 		tiemVaccineView.setActionDeleteButton(new deleteBtnAction());
 		tiemVaccineView.setKeyListenerFind(new findKeyListener());
 		try {
-			tiemVaccineView.setDataForTable(colName, tiemVaccineModel.getData(""));
-		} catch (SQLException e) {
+			tiemVaccineView.setDataForTable(tiemVaccineModel.getData(""));
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			tiemVaccineView.showMessage("Lỗi kết nối database");
+			tiemVaccineView.showMessage(e.getMessage());
 		}
 	}
 	
@@ -66,6 +64,7 @@ public class TiemVaccineController {
 //			TiemVaccineView.getSelectedRow();
 			try {
 				tiemVaccineModel.delete(tiemVaccineView.getSelectedInfo());
+				tiemVaccineView.showMessage("Xóa dữ liệu thành công");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				tiemVaccineView.showMessage("Loi databse");
@@ -88,10 +87,9 @@ public class TiemVaccineController {
 		public void keyReleased(KeyEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
-				tiemVaccineView.setDataForTable(colName, tiemVaccineModel.getData(tiemVaccineView.getTextToFind()));
+				tiemVaccineView.setDataForTable(tiemVaccineModel.getData(tiemVaccineView.getTextToFind()));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 				tiemVaccineView.showMessage("Loi databse");
 			} catch (Exception e1) {
 				// TODO: handle exception
@@ -106,6 +104,4 @@ public class TiemVaccineController {
 		}
 		
 	}
-	
-
 }

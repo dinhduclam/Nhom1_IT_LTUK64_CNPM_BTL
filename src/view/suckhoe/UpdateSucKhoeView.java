@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -18,14 +17,18 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 
+import model.entity.SucKhoeInfo;
+
 public class UpdateSucKhoeView {
 
 	private JFrame frame;
 	private JTextField hoTen;
 	private JTextField id;
 	private JButton submit;
-	private JTextField ngayTest;
-	private JRadioButton amTinh, duongTinh, testNhanh, testPCR;
+	private JTextField ngayXuatHien;
+	private JRadioButton coHo, khongHo, coSot, khongSot, coKhoTho, khongKhoTho, coDauNguoi, khongDauNguoi, coMatViGiac, khongMatViGiac, coBuonNon, khongBuonNon;
+	private JTextField trieuChungKhac;
+	private JLabel maKhaiBao;
 
 	public UpdateSucKhoeView() {
 //		initialize();
@@ -33,17 +36,17 @@ public class UpdateSucKhoeView {
 
 	public void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 633, 359);
+		frame.setBounds(100, 100, 633, 399);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("THÊM THÔNG TIN TEST COVID");
+		JLabel lblNewLabel = new JLabel("THÊM THÔNG TIN SỨC KHỎE BẤT THƯỜNG");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(134, 11, 338, 34);
+		lblNewLabel.setBounds(104, 11, 401, 34);
 		frame.getContentPane().add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("H\u1ECD & T\u00EAn:");
+		JLabel lblNewLabel_1 = new JLabel("Họ & Tên:");
 		lblNewLabel_1.setBounds(10, 83, 148, 20);
 		frame.getContentPane().add(lblNewLabel_1);
 		
@@ -54,7 +57,7 @@ public class UpdateSucKhoeView {
 		frame.getContentPane().add(hoTen);
 		hoTen.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Ph\u1EA7n h\u00E0nh ch\u00EDnh:");
+		JLabel lblNewLabel_2 = new JLabel("Phần hành chính:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2.setBounds(10, 52, 148, 20);
 		frame.getContentPane().add(lblNewLabel_2);
@@ -66,31 +69,27 @@ public class UpdateSucKhoeView {
 		id.setBounds(480, 83, 127, 20);
 		frame.getContentPane().add(id);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("S\u1ED1 h\u1ED9 chi\u1EBFu/CCCD:");
+		JLabel lblNewLabel_1_1 = new JLabel("Số hộ chiếu/CCCD:");
 		lblNewLabel_1_1.setBounds(335, 83, 148, 20);
 		frame.getContentPane().add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("Thông tin test covid:");
+		JLabel lblNewLabel_2_1 = new JLabel("Hiện tưởng sức khỏe:");
 		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNewLabel_2_1.setBounds(10, 123, 148, 20);
 		frame.getContentPane().add(lblNewLabel_2_1);
 		
-		JLabel lblNewLabel_1_4 = new JLabel("Kết quả:");
-		lblNewLabel_1_4.setBounds(10, 154, 148, 20);
-		frame.getContentPane().add(lblNewLabel_1_4);
-		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Loại test:");
-		lblNewLabel_1_1_1.setBounds(335, 154, 148, 20);
-		frame.getContentPane().add(lblNewLabel_1_1_1);
+		JLabel lblHo = new JLabel("Ho:");
+		lblHo.setBounds(10, 154, 66, 20);
+		frame.getContentPane().add(lblHo);
 		
 		submit = new JButton("Submit");
 		submit.setContentAreaFilled(false);
-		submit.setBounds(257, 261, 109, 34);
+		submit.setBounds(256, 303, 109, 34);
 		frame.getContentPane().add(submit);
 		
 		JButton close = new JButton("Close");
 		close.setContentAreaFilled(false);
-		close.setBounds(515, 280, 92, 29);
+		close.setBounds(515, 320, 92, 29);
 		close.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -100,43 +99,128 @@ public class UpdateSucKhoeView {
 		});
 		frame.getContentPane().add(close);
 		
-		JLabel lblNewLabel_1_4_1 = new JLabel("Ngày test (yyyy/MM/dd):");
-		lblNewLabel_1_4_1.setBounds(10, 210, 148, 20);
+		JLabel lblNewLabel_1_4_1 = new JLabel("Ngày xuất hiện (yyyy/MM/dd):");
+		lblNewLabel_1_4_1.setBounds(10, 269, 172, 20);
 		frame.getContentPane().add(lblNewLabel_1_4_1);
 		
-		ngayTest = new JTextField();
-		ngayTest.setColumns(10);
-		ngayTest.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		ngayTest.setBackground(SystemColor.menu);
-		ngayTest.setBounds(155, 210, 127, 20);
-		frame.getContentPane().add(ngayTest);
+		ngayXuatHien = new JTextField();
+		ngayXuatHien.setColumns(10);
+		ngayXuatHien.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		ngayXuatHien.setBackground(SystemColor.menu);
+		ngayXuatHien.setBounds(192, 270, 415, 20);
+		frame.getContentPane().add(ngayXuatHien);
 		
-		amTinh = new JRadioButton("Âm tính");
-		amTinh.setBounds(155, 150, 109, 23);
-		frame.getContentPane().add(amTinh);
+		coHo = new JRadioButton("Có");
+		coHo.setBounds(104, 153, 71, 23);
+		frame.getContentPane().add(coHo);
 		
-		duongTinh = new JRadioButton("Dương tính");
-		duongTinh.setBounds(155, 176, 109, 23);
-		frame.getContentPane().add(duongTinh);
+		khongHo = new JRadioButton("Không");
+		khongHo.setBounds(182, 153, 100, 23);
+		frame.getContentPane().add(khongHo);
+			
+		khongSot = new JRadioButton("Không");
+		khongSot.setBounds(182, 181, 100, 23);
+		frame.getContentPane().add(khongSot);
 		
-		ButtonGroup kq = new ButtonGroup();
-		kq.add(amTinh);
-		kq.add(duongTinh);
+		coSot = new JRadioButton("Có");
+		coSot.setBounds(104, 181, 71, 23);
+		frame.getContentPane().add(coSot);
 		
-		testNhanh = new JRadioButton("Test nhanh");
-		testNhanh.setBounds(480, 153, 109, 23);
-		frame.getContentPane().add(testNhanh);
+		JLabel lblSt = new JLabel("Sốt");
+		lblSt.setBounds(10, 182, 66, 20);
+		frame.getContentPane().add(lblSt);
 		
-		testPCR = new JRadioButton("PCR");
-		testPCR.setBounds(480, 181, 109, 23);
-		frame.getContentPane().add(testPCR);
+		khongDauNguoi = new JRadioButton("Không");
+		khongDauNguoi.setBounds(507, 151, 100, 23);
+		frame.getContentPane().add(khongDauNguoi);
 		
-		ButtonGroup loaiTest = new ButtonGroup();
-		loaiTest.add(testNhanh);
-		loaiTest.add(testPCR);
+		coDauNguoi = new JRadioButton("Có");
+		coDauNguoi.setBounds(434, 151, 71, 23);
+		frame.getContentPane().add(coDauNguoi);
 		
-		hoTen.setEditable(false);
-		id.setEditable(false);
+		JLabel lblauNgi = new JLabel("Đau người:");
+		lblauNgi.setBounds(335, 152, 66, 20);
+		frame.getContentPane().add(lblauNgi);
+		
+		khongMatViGiac = new JRadioButton("Không");
+		khongMatViGiac.setBounds(507, 181, 100, 23);
+		frame.getContentPane().add(khongMatViGiac);
+		
+		coMatViGiac = new JRadioButton("Có");
+		coMatViGiac.setBounds(434, 181, 71, 23);
+		frame.getContentPane().add(coMatViGiac);
+		
+		JLabel lblMtVGic = new JLabel("Mất vị giác:");
+		lblMtVGic.setBounds(335, 182, 66, 20);
+		frame.getContentPane().add(lblMtVGic);
+		
+		khongKhoTho = new JRadioButton("Không");
+		khongKhoTho.setBounds(182, 208, 100, 23);
+		frame.getContentPane().add(khongKhoTho);
+		
+		coKhoTho = new JRadioButton("Có");
+		coKhoTho.setBounds(104, 208, 71, 23);
+		frame.getContentPane().add(coKhoTho);
+		
+		JLabel lblKhTh = new JLabel("Khó thở:");
+		lblKhTh.setBounds(10, 209, 66, 20);
+		frame.getContentPane().add(lblKhTh);
+		
+		khongBuonNon = new JRadioButton("Không");
+		khongBuonNon.setBounds(507, 208, 100, 23);
+		frame.getContentPane().add(khongBuonNon);
+		
+		coBuonNon = new JRadioButton("Có");
+		coBuonNon.setBounds(434, 208, 71, 23);
+		frame.getContentPane().add(coBuonNon);
+		
+		JLabel lblBunNn = new JLabel("Buồn nôn:");
+		lblBunNn.setBounds(335, 209, 66, 20);
+		frame.getContentPane().add(lblBunNn);
+		
+		ButtonGroup ho = new ButtonGroup();
+		ho.add(coHo);
+		ho.add(khongHo);
+		khongHo.setSelected(true);
+		ButtonGroup sot = new ButtonGroup();
+		sot.add(coSot);
+		sot.add(khongSot);
+		khongSot.setSelected(true);
+		ButtonGroup khoTho = new ButtonGroup();
+		khoTho.add(coKhoTho);
+		khoTho.add(khongKhoTho);
+		khongKhoTho.setSelected(true);
+		ButtonGroup dauNguoi = new ButtonGroup();
+		dauNguoi.add(coDauNguoi);
+		dauNguoi.add(khongDauNguoi);
+		khongDauNguoi.setSelected(true);
+		ButtonGroup matViGiac = new ButtonGroup();
+		matViGiac.add(coMatViGiac);
+		matViGiac.add(khongMatViGiac);
+		khongMatViGiac.setSelected(true);
+		ButtonGroup buonNon = new ButtonGroup();
+		buonNon.add(coBuonNon);
+		buonNon.add(khongBuonNon);
+		khongBuonNon.setSelected(true);
+		
+		JLabel lblNewLabel_1_4_1_1 = new JLabel("Triệu chứng khác:");
+		lblNewLabel_1_4_1_1.setBounds(10, 238, 172, 20);
+		frame.getContentPane().add(lblNewLabel_1_4_1_1);
+		
+		trieuChungKhac = new JTextField();
+		trieuChungKhac.setColumns(10);
+		trieuChungKhac.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		trieuChungKhac.setBackground(SystemColor.menu);
+		trieuChungKhac.setBounds(192, 239, 415, 20);
+		frame.getContentPane().add(trieuChungKhac);
+		
+		JLabel lblNewLabel_3 = new JLabel("Mã khai báo: ");
+		lblNewLabel_3.setBounds(168, 127, 87, 14);
+		frame.getContentPane().add(lblNewLabel_3);
+		
+		maKhaiBao = new JLabel("0");
+		maKhaiBao.setBounds(265, 127, 46, 14);
+		frame.getContentPane().add(maKhaiBao);
 		
 		frame.setVisible(true);
 		
@@ -146,16 +230,27 @@ public class UpdateSucKhoeView {
 		submit.addActionListener(a);
 	}
 	
-	public void setData(Object[] data) {
-		hoTen.setText((String) data[0]);
-		id.setText((String) data[1]);
-		if (data[2].equals("Dương tính")) duongTinh.setSelected(true);
-		else amTinh.setSelected(true);
-		if (data[3].equals("Test Nhanh")) testNhanh.setSelected(true);
-		else testPCR.setSelected(true);
-		ngayTest.setText(data[4].toString());
+	public void setData(SucKhoeInfo sucKhoe) {
+		maKhaiBao.setText(String.valueOf(sucKhoe.getMaKhaiBao()));
+		hoTen.setText(sucKhoe.getHoTen());
+		id.setText(sucKhoe.getId());
+		if (sucKhoe.getHo().equals("Có")) coHo.setSelected(true);
+		else khongHo.setSelected(true);
+		if (sucKhoe.getSot().equals("Có")) coSot.setSelected(true);
+		else khongSot.setSelected(true);
+		if (sucKhoe.getKhoTho().equals("Có")) coKhoTho.setSelected(true);
+		else khongKhoTho.setSelected(true);
+		if (sucKhoe.getDauNguoi().equals("Có")) coDauNguoi.setSelected(true);
+		else khongDauNguoi.setSelected(true);
+		if (sucKhoe.getMatViGiac().equals("Có")) coMatViGiac.setSelected(true);
+		else khongMatViGiac.setSelected(true);
+		if (sucKhoe.getBuonNon().equals("Có")) coBuonNon.setSelected(true);
+		else khongBuonNon.setSelected(true);
+		trieuChungKhac.setText(sucKhoe.getTrieuChungKhac());
+		ngayXuatHien.setText(sucKhoe.getNgayXuatHien().toString());
 		hoTen.requestFocus();
 	}
+
 	//done
 	public String getHoTen() throws Exception{
 		String name = hoTen.getText();
@@ -176,46 +271,52 @@ public class UpdateSucKhoeView {
 		return cccd;
 	}
 	
-	public String getKetQua() throws Exception {
-		try{
-			if (amTinh.isSelected()) return "Âm tính";
-			if (duongTinh.isSelected()) return "Dương tính";
-			throw new Exception();
-		} catch (Exception e){
-			throw new Exception("Chưa chọn Kết quả");
-		}
+	public String getHo() {
+		if (coHo.isSelected()) return "Có";
+		else return "Không";
 	}
 	
-	public String getLoaiTest() throws Exception {
-		try{
-			if (testNhanh.isSelected()) return "Test nhanh";
-			if (testPCR.isSelected()) return "PCR";
-			throw new Exception();
-		} catch (Exception e){
-			throw new Exception("Chưa chọn Loại test");
-		}
+	public String getSot() {
+		if (coSot.isSelected()) return "Có";
+		else return "Không";
 	}
 	
-	public Date getNgayTest() throws Exception{
-		String dateString = ngayTest.getText();
-		Date date = null;
-
+	public String getKhoTho() {
+		if (coKhoTho.isSelected()) return "Có";
+		else return "Không";
+	}
+	
+	public String getDauNguoi() {
+		if (coDauNguoi.isSelected()) return "Có";
+		else return "Không";
+	}
+	
+	public String getMatViGiac() {
+		if (coMatViGiac.isSelected()) return "Có";
+		else return "Không";
+	}
+	
+	public String getBuonNon() {
+		if (coBuonNon.isSelected()) return "Có";
+		else return "Không";
+	}
+	
+	public String getTrieuChungKhac() {
+		String khac = trieuChungKhac.getText();
+		return khac;
+	}
+	
+	public String getNgayXuatHien() throws Exception{
+		String dateString = ngayXuatHien.getText();
+		
 		if (dateString.equals("")) {
-			ngayTest.requestFocus();
-			throw new Exception("Chưa điền Ngày test");
+			ngayXuatHien.requestFocus();
+			throw new Exception("Chưa điền Ngày xuất hiện");
 		}
-		else {
-			String[] d = dateString.split("[^0-9]");
-			if (d.length != 3) throw new Exception("Sai định dạng (yyyy/MM/dd)");
-			try {
-				date = Date.valueOf(d[0] + "-" + d[1] + "-" + d[2]);
-			} catch (Exception e) {
-				throw new Exception("Ngày không hợp lệ (yyyy/MM/dd)");
-			}
-		}
-		return date;
+		
+		return dateString;
 	}
-
+	
 	//done
 	public void showMessage(String message) {
 		JOptionPane.showMessageDialog(frame, message);
@@ -224,5 +325,4 @@ public class UpdateSucKhoeView {
 	public void dispose() {
 		frame.dispose();
 	}
-
 }

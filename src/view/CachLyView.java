@@ -19,7 +19,8 @@ import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controller.CachLyController;
+import model.NhanKhauModel;
+import model.entity.CachLyInfo;
 
 public class CachLyView {
 
@@ -28,7 +29,7 @@ public class CachLyView {
 	private DefaultTableModel model;
 	private JTextField textFind;
 	private JButton btnAdd, btnUpdate, btnDelete, btnClose, btnView;
-	
+	public static final String colName[] = {"Họ tên", "Số hộ chiếu/CCCD", "Ngày bắt đầu", "Mức độ cách ly", "Địa chỉ cách ly", "Test Covid"};
 	/**
 	 * @wbp.parser.entryPoint
 	 */
@@ -50,7 +51,7 @@ public class CachLyView {
 		model = new DefaultTableModel();
 		scrollPane.setViewportView(table);
 		
-		JLabel lblNewLabel = new JLabel("QU\u1EA2N L\u00DD C\u00C1CH LY");
+		JLabel lblNewLabel = new JLabel("QUẢN LÝ THÔNG TIN CÁCH LY");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 0, 856, 38);
@@ -102,23 +103,32 @@ public class CachLyView {
 		frame.setVisible(true);
 	}
 	
-	public void setDataForTable(String[] colName, ArrayList<Object[]> data) {
+	public void setDataForTable(ArrayList<CachLyInfo> data) {
 		model = new DefaultTableModel();
 		model.setColumnIdentifiers(colName);
-		for (Object[] row: data) {
+		for (CachLyInfo  cachLyInfo : data) {
+			Object[] row = {
+				cachLyInfo.getHoTen(),
+				cachLyInfo.getId(),
+				cachLyInfo.getNgayBatDau(),
+				cachLyInfo.getMucDoCachLy(),
+				cachLyInfo.getDiaChiCachLy(),
+				cachLyInfo.getTestCovid().size() > 0 ? "Đã test" : "Chưa test"
+			};
 			model.addRow(row);
 		}
 		table.setModel(model);
 	}
 	
-	public Object[] getSelectedInfo() throws Exception{
+	public CachLyInfo getSelectedInfo() throws Exception{
 		int selectedRow = table.getSelectedRow();
 		if (selectedRow == -1) throw new Exception("Chưa chọn thông tin"); 
-		Object[] rowData = new Object[CachLyController.colName.length];
-		for (int i=0; i<CachLyController.colName.length; i++) {
-			rowData[i] = table.getValueAt(table.getSelectedRow(), i);
-		}
-		return rowData;
+		return new CachLyInfo(
+				NhanKhauModel.getNhanKhau((String) table.getValueAt(selectedRow, 1), (String) table.getValueAt(selectedRow, 0)),
+				table.getValueAt(selectedRow, 2).toString(),
+				table.getValueAt(selectedRow, 3).toString(),
+				table.getValueAt(selectedRow, 4).toString()
+			);
 	}
 	
 	public String getTextToFind() {

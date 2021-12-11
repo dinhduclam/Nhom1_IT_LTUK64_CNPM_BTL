@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -29,7 +28,7 @@ public class AddSucKhoeView {
 	private JTextField trieuChungKhac;
 
 	public AddSucKhoeView() {
-		initialize();
+//		initialize();
 	}
 
 	public void initialize() {
@@ -223,8 +222,15 @@ public class AddSucKhoeView {
 	public void clear() {
 		hoTen.setText("");
 		id.setText("");
-		coHo.setSelected(false);
-		khongHo.setSelected(false);
+//		coHo.setSelected(false);
+		khongHo.setSelected(true);
+		khongSot.setSelected(true);
+		khongKhoTho.setSelected(true);
+		khongDauNguoi.setSelected(true);
+		khongBuonNon.setSelected(true);
+		khongMatViGiac.setSelected(true);
+		trieuChungKhac.setText("");
+		ngayXuatHien.setText("");
 		hoTen.requestFocus();
 	}
 	
@@ -278,30 +284,20 @@ public class AddSucKhoeView {
 		else return "Không";
 	}
 	
-	public String gettrieuChungKhac() {
+	public String getTrieuChungKhac() {
 		String khac = trieuChungKhac.getText();
-		if (khac.equals("")) return null;
-		else return khac;
+		return khac;
 	}
 	
-	public Date getNgayXuatHien() throws Exception{
+	public String getNgayXuatHien() throws Exception{
 		String dateString = ngayXuatHien.getText();
-		Date date = null;
-
+		
 		if (dateString.equals("")) {
 			ngayXuatHien.requestFocus();
 			throw new Exception("Chưa điền Ngày xuất hiện");
 		}
-		else {
-			String[] d = dateString.split("[^0-9]");
-			if (d.length != 3) throw new Exception("Sai định dạng (yyyy/MM/dd)");
-			try {
-				date = Date.valueOf(d[0] + "-" + d[1] + "-" + d[2]);
-			} catch (Exception e) {
-				throw new Exception("Ngày không hợp lệ (yyyy/MM/dd)");
-			}
-		}
-		return date;
+		
+		return dateString;
 	}
 
 	//done

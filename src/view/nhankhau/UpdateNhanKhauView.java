@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -17,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
+
+import model.entity.NhanKhauInfo;
 
 public class UpdateNhanKhauView {
 
@@ -64,7 +65,6 @@ public class UpdateNhanKhauView {
 		id.setBackground(UIManager.getColor("TextField.disabledBackground"));
 		id.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		id.setColumns(10);
-		id.setEditable(false);
 		id.setBounds(480, 56, 127, 20);
 		frame.getContentPane().add(id);
 		
@@ -184,18 +184,18 @@ public class UpdateNhanKhauView {
 		submit.addActionListener(a);
 	}
 	
-	public void setData(Object[] data) {
-		hoTen.setText((String) data[0]);
-		id.setText((String) data[1]);
-		if (data[2].equals("Nam")) nam.setSelected(true);
-		else if (data[2].equals("Nữ")) nu.setSelected(true);
+	public void setData(NhanKhauInfo nhanKhau) {
+		hoTen.setText(nhanKhau.getHoTen());
+		id.setText(nhanKhau.getId());
+		if (nhanKhau.getGioiTinh().equals("Nam")) nam.setSelected(true);
+		else if (nhanKhau.getGioiTinh().equals("Nữ")) nu.setSelected(true);
 		else khac.setSelected(true);
-		ngaySinh.setText(data[3].toString());
-		sdt.setText((String) data[4]);
-		soBHYT.setText((String) data[5]);
-		email.setText((String) data[6]);
-		quocTich.setText((String) data[7]);
-		thuongTruTamTru.setText((String) data[8]);
+		ngaySinh.setText(nhanKhau.getNgaySinh().toString());
+		sdt.setText(nhanKhau.getSoDienThoai());
+		soBHYT.setText(nhanKhau.getSoTheBHYT());
+		email.setText(nhanKhau.getEmail());
+		quocTich.setText(nhanKhau.getQuocTich());
+		thuongTruTamTru.setText(nhanKhau.getThuongTruTamTru());
 		hoTen.requestFocus();
 	}
 	
@@ -219,24 +219,13 @@ public class UpdateNhanKhauView {
 		return cccd;
 	}
 	//done
-	public Date getNgaySinh() throws Exception{
+	public String getNgaySinh() throws Exception{
 		String dateString = ngaySinh.getText();
-		Date date = null;
-
 		if (dateString.equals("")) {
 			ngaySinh.requestFocus();
 			throw new Exception("Chưa điền Ngày sinh");
 		}
-		else {
-			String[] d = dateString.split("[^0-9]");
-			if (d.length != 3) throw new Exception("Sai định dạng (yyyy/MM/dd)");
-			try {
-				date = Date.valueOf(d[0] + "-" + d[1] + "-" + d[2]);
-			} catch (Exception e) {
-				throw new Exception("Sai định dạng (yyyy/MM/dd)");
-			}
-		}
-		return date;
+		return dateString;
 	}
 	
 	//done
@@ -254,27 +243,18 @@ public class UpdateNhanKhauView {
 	//done
 	public String getSoDienThoai(){
 		String soDT = sdt.getText();
-		if (soDT.equals("")) {
-			return null;
-		}
 		return soDT;
 	}
 	
 	//done
-	public String getSoBHYT(){
+	public String getSoTheBHYT(){
 		String bhyt = soBHYT.getText();
-		if (bhyt.equals("")) {
-			return null;
-		}
 		return bhyt;
 	}
 	
 	//done
 	public String getEmail(){
 		String e = email.getText();
-		if (e.equals("")) {
-			return null;
-		}
 		return e;
 	}
 	

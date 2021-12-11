@@ -3,7 +3,9 @@ package controller.testcovid;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import model.NhanKhauModel;
 import model.TestCovidModel;
+import model.entity.TestCovidInfo;
 import view.testcovid.AddTestCovidView;
 
 public class AddTestCovidController {
@@ -22,14 +24,15 @@ public class AddTestCovidController {
 			// TODO Auto-generated method stub
 			try {
 				//HoTen	Id	KetQua	LoaiTest NgayTest
-				Object[] data = {
-					addTestCovidView.getHoTen(),
-					addTestCovidView.getId(),
+				TestCovidInfo testCovid = new TestCovidInfo(
+					NhanKhauModel.getNhanKhau(addTestCovidView.getId(), addTestCovidView.getHoTen()),
+					addTestCovidView.getMaCode(),
 					addTestCovidView.getKetQua(),
 					addTestCovidView.getLoaiTest(),
 					addTestCovidView.getNgayTest()
-				};
-				testCovidModel.insert(data);
+				);
+				testCovidModel.insert(testCovid);
+				addTestCovidView.showMessage("Thêm dữ liệu thành công");
 				addTestCovidView.clear();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

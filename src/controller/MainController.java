@@ -59,7 +59,7 @@ public class MainController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			mainView.showMessage("Chức năng này chưa hoàn thành");
+			new SucKhoeController();
 		}
 	}
 	
@@ -67,7 +67,7 @@ public class MainController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			mainView.showMessage("Chức năng này chưa hoàn thành");
+			new KhaiBaoController();
 		}
 	}
 	

@@ -9,30 +9,30 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
 
-import controller.testcovid.AddTestCovidController;
-import controller.testcovid.UpdateTestCovidController;
-import model.TestCovidModel;
-import view.TestCovidView;
+import controller.suckhoe.AddSucKhoeController;
+import controller.suckhoe.UpdateSucKhoeController;
+import model.SucKhoeModel;
+import view.SucKhoeView;
 
 /**
  * @author Acer
  *
  */
-public class TestCovidController {
-	private TestCovidView testCovidView = new TestCovidView();
-	private TestCovidModel testCovidModel = new TestCovidModel(testCovidView);
+public class SucKhoeController {
+	private SucKhoeView sucKhoeView = new SucKhoeView();
+	private SucKhoeModel sucKhoeModel = new SucKhoeModel(sucKhoeView);
 	
-	public TestCovidController() {
-		testCovidView.initialize();
-		testCovidView.setActionAddButton(new addBtnAction());
-		testCovidView.setActionUpdateButton(new updateBtnAction());
-		testCovidView.setActionDeleteButton(new deleteBtnAction());
-		testCovidView.setKeyListenerFind(new findKeyListener());
+	public SucKhoeController() {
+		sucKhoeView.initialize();
+		sucKhoeView.setActionAddButton(new addBtnAction());
+		sucKhoeView.setActionUpdateButton(new updateBtnAction());
+		sucKhoeView.setActionDeleteButton(new deleteBtnAction());
+		sucKhoeView.setKeyListenerFind(new findKeyListener());
 		try {
-			testCovidView.setDataForTable(testCovidModel.getData(""));
+			sucKhoeView.setDataForTable(sucKhoeModel.getData(""));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			testCovidView.showMessage(e.getMessage());
+			sucKhoeView.showMessage(e.getMessage());
 		}
 	}
 	
@@ -40,7 +40,7 @@ public class TestCovidController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			new AddTestCovidController(testCovidModel);
+			new AddSucKhoeController(sucKhoeModel);
 		}
 	}
 	
@@ -49,10 +49,10 @@ public class TestCovidController {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
-				new UpdateTestCovidController(testCovidModel, testCovidView.getSelectedInfo());
+				new UpdateSucKhoeController(sucKhoeModel, sucKhoeView.getSelectedInfo());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				testCovidView.showMessage(e.getMessage());
+				sucKhoeView.showMessage(e.getMessage());
 			}
 		}
 	}
@@ -61,16 +61,16 @@ public class TestCovidController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-//			testCovidView.getSelectedRow();
+//			SucKhoeView.getSelectedRow();
 			try {
-				testCovidModel.delete(testCovidView.getSelectedInfo());
-				testCovidView.showMessage("Xóa dữ liệu thành công");
+				sucKhoeModel.delete(sucKhoeView.getSelectedInfo());
+				sucKhoeView.showMessage("Xóa dữ liệu thành công");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				testCovidView.showMessage("Loi databse");
+				sucKhoeView.showMessage("Loi databse");
 			} catch (Exception e1) {
 				// TODO: handle exception
-				testCovidView.showMessage(e1.getMessage());
+				sucKhoeView.showMessage(e1.getMessage());
 			}
 		}
 	}
@@ -87,14 +87,13 @@ public class TestCovidController {
 		public void keyReleased(KeyEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
-				testCovidView.setDataForTable(testCovidModel.getData(testCovidView.getTextToFind()));
+				sucKhoeView.setDataForTable(sucKhoeModel.getData(sucKhoeView.getTextToFind()));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-				testCovidView.showMessage("Loi databse");
+				sucKhoeView.showMessage("Loi databse");
 			} catch (Exception e1) {
 				// TODO: handle exception
-				testCovidView.showMessage(e1.getMessage());
+				sucKhoeView.showMessage(e1.getMessage());
 			}
 		}
 
@@ -105,4 +104,5 @@ public class TestCovidController {
 		}
 		
 	}
+	
 }

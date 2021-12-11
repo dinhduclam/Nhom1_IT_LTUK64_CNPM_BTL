@@ -3,7 +3,9 @@ package controller.suckhoe;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import model.NhanKhauModel;
 import model.SucKhoeModel;
+import model.entity.SucKhoeInfo;
 import view.suckhoe.AddSucKhoeView;
 
 public class AddSucKhoeController {
@@ -22,18 +24,19 @@ public class AddSucKhoeController {
 			// TODO Auto-generated method stub
 			try {
 				//HoTen	Id	KetQua	LoaiTest NgayTest
-				Object[] data = {
-					addSucKhoeView.getHoTen(),
-					addSucKhoeView.getId(),
+				SucKhoeInfo sucKhoe = new SucKhoeInfo(	
+					NhanKhauModel.getNhanKhau(addSucKhoeView.getId(), addSucKhoeView.getHoTen()),
 					addSucKhoeView.getHo(),
 					addSucKhoeView.getSot(),
 					addSucKhoeView.getKhoTho(),
 					addSucKhoeView.getDauNguoi(),
 					addSucKhoeView.getMatViGiac(),
 					addSucKhoeView.getBuonNon(),
-					addSucKhoeView.gettrieuChungKhac()
-				};
-				sucKhoeModel.insert(data);
+					addSucKhoeView.getTrieuChungKhac(),
+					addSucKhoeView.getNgayXuatHien()
+				);
+				sucKhoeModel.insert(sucKhoe);
+				addSucKhoeView.showMessage("Thêm dữ liệu thành công");
 				addSucKhoeView.clear();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

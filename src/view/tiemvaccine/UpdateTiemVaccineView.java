@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
+
+import model.entity.TiemVaccineInfo;
 
 public class UpdateTiemVaccineView {
 
@@ -152,7 +153,6 @@ public class UpdateTiemVaccineView {
 		loaiVaccine.addItem("Abdala");
 		loaiVaccine.addItem("Janssen");
 		
-		lanTiem.setEnabled(false);
 		frame.setVisible(true);
 	}
 	//done
@@ -160,14 +160,14 @@ public class UpdateTiemVaccineView {
 		submit.addActionListener(a);
 	}
 	
-	public void setData(Object[] data) {
-		hoTen.setText((String) data[0]);
-		id.setText((String) data[1]);
-		lanTiem.setValue(data[2]);
-		loaiVaccine.setSelectedItem(data[3]);
-		loVaccine.setText((String) data[4]);
-		ngayTiem.setText(data[5].toString());
-		donViTiemChung.setText((String) data[6]);
+	public void setData(TiemVaccineInfo tiemVaccine) {
+		hoTen.setText(tiemVaccine.getHoTen());
+		id.setText(tiemVaccine.getId());
+		lanTiem.setValue(tiemVaccine.getLanTiem());
+		loaiVaccine.setSelectedItem(tiemVaccine.getLoaiVaccine());
+		loVaccine.setText(tiemVaccine.getLoVaccine());
+		ngayTiem.setText(tiemVaccine.getNgayTiem().toString());
+		donViTiemChung.setText(tiemVaccine.getDonViTiemChung());
 		hoTen.requestFocus();
 	}
 	
@@ -207,24 +207,15 @@ public class UpdateTiemVaccineView {
 		return loVaccine.getText();
 	}
 	
-	public Date getNgayTiem() throws Exception {
+	public String getNgayTiem() throws Exception {
 		String dateString = ngayTiem.getText();
-		Date date = null;
 
 		if (dateString.equals("")) {
 			ngayTiem.requestFocus();
 			throw new Exception("Chưa điền Ngày tiêm");
 		}
-		else {
-			String[] d = dateString.split("[^0-9]");
-			if (d.length != 3) throw new Exception("Sai định dạng (yyyy/MM/dd)");
-			try {
-				date = Date.valueOf(d[0] + "-" + d[1] + "-" + d[2]);
-			} catch (Exception e) {
-				throw new Exception("Ngày không hợp lệ (yyyy/MM/dd)");
-			}
-		}
-		return date;
+		
+		return dateString;
 	}
 	
 	//done

@@ -8,12 +8,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import controller.cachly.AddCachLyController;
 import controller.cachly.UpdateCachLyController;
 import model.CachLyModel;
-import model.TestCovidModel;
+import model.entity.CachLyInfo;
 import view.CachLyView;
 import view.cach_ly.ViewDetailCachLy;
 
@@ -25,8 +24,6 @@ public class CachLyController {
 	private CachLyView cachLyView = new CachLyView();
 	private CachLyModel cachLyModel = new CachLyModel(cachLyView);
 	
-	public static final String colName[] = {"Họ tên", "Số hộ chiếu/CCCD", "Ngày bắt đầu", "Mức độ cách ly", "Địa chỉ cách ly", "Test Covid"};
-	
 	public CachLyController() {
 		cachLyView.initialize();
 		cachLyView.setActionAddButton(new addBtnAction());
@@ -35,10 +32,10 @@ public class CachLyController {
 		cachLyView.setActionViewButton(new viewDetailAction());
 		cachLyView.setKeyListenerFind(new findKeyListener());
 		try {
-			cachLyView.setDataForTable(colName, cachLyModel.getData(cachLyView.getTextToFind()));
-		} catch (SQLException e) {
+			cachLyView.setDataForTable(cachLyModel.getData(cachLyView.getTextToFind()));
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			cachLyView.showMessage("Lỗi kết nối database");
+			cachLyView.showMessage(e.getMessage());
 		}
 	}
 	
@@ -69,15 +66,12 @@ public class CachLyController {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
+				CachLyInfo cachLyInfo = cachLyView.getSelectedInfo();
 				ViewDetailCachLy viewDetail = new ViewDetailCachLy();
 				viewDetail.initialize();
-				Object data[] = cachLyView.getSelectedInfo();
-				viewDetail.setData(data);
-				ArrayList<Object[]> testCovidData = TestCovidModel.getVaccineInfo((String) data[1], data[2].toString());
-				viewDetail.setDataForTable(TestCovidController.colName, testCovidData);
+				viewDetail.setData(cachLyInfo);
 			}catch (Exception e){
-				e.printStackTrace();
-				
+				cachLyView.showMessage(e.getMessage());
 			}
 		}
 		
@@ -89,6 +83,7 @@ public class CachLyController {
 			// TODO Auto-generated method stub
 			try {
 				cachLyModel.delete(cachLyView.getSelectedInfo());
+				cachLyView.showMessage("Xóa dữ liệu thành công");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				cachLyView.showMessage("Loi databse");
@@ -111,10 +106,9 @@ public class CachLyController {
 		public void keyReleased(KeyEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
-				cachLyView.setDataForTable(colName, cachLyModel.getData(cachLyView.getTextToFind()));
+				cachLyView.setDataForTable(cachLyModel.getData(cachLyView.getTextToFind()));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 				cachLyView.showMessage("Loi databse");
 			} catch (Exception e1) {
 				// TODO: handle exception

@@ -3,7 +3,9 @@ package controller.tiemvaccine;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import model.NhanKhauModel;
 import model.TiemVaccineModel;
+import model.entity.TiemVaccineInfo;
 import view.tiemvaccine.AddTiemVaccineView;
 
 public class AddTiemVaccineController {
@@ -21,16 +23,16 @@ public class AddTiemVaccineController {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
-				Object[] data = {
-					addTiemVaccineView.getHoTen(),
-					addTiemVaccineView.getId(),
+				TiemVaccineInfo tiemVaccine = new TiemVaccineInfo(
+					NhanKhauModel.getNhanKhau(addTiemVaccineView.getId(), addTiemVaccineView.getHoTen()),
 					addTiemVaccineView.getLanTiem(),
 					addTiemVaccineView.getLoaiVaccine(),
 					addTiemVaccineView.getLoVaccine(),
 					addTiemVaccineView.getNgayTiem(),
 					addTiemVaccineView.getDonViTiemChung()
-				};
-				tiemVaccineModel.insert(data);
+				);
+				tiemVaccineModel.insert(tiemVaccine);
+				addTiemVaccineView.showMessage("Thêm dữ liệu thành công");
 				addTiemVaccineView.clear();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

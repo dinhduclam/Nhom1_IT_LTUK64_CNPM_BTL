@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -216,24 +215,13 @@ public class AddNhanKhauView {
 		return cccd;
 	}
 	//done
-	public Date getNgaySinh() throws Exception{
+	public String getNgaySinh() throws Exception{
 		String dateString = ngaySinh.getText();
-		Date date = null;
-
 		if (dateString.equals("")) {
 			ngaySinh.requestFocus();
 			throw new Exception("Chưa điền Ngày sinh");
 		}
-		else {
-			String[] d = dateString.split("[^0-9]");
-			if (d.length != 3) throw new Exception("Sai định dạng (yyyy/MM/dd)");
-			try {
-				date = Date.valueOf(d[0] + "-" + d[1] + "-" + d[2]);
-			} catch (Exception e) {
-				throw new Exception("Ngày không hợp lệ (yyyy/MM/dd)");
-			}
-		}
-		return date;
+		return dateString;
 	}
 	
 	//done
@@ -251,27 +239,18 @@ public class AddNhanKhauView {
 	//done
 	public String getSoDienThoai(){
 		String soDT = sdt.getText();
-		if (soDT.equals("")) {
-			return null;
-		}
 		return soDT;
 	}
 	
 	//done
-	public String getSoBHYT(){
+	public String getSoTheBHYT(){
 		String bhyt = soBHYT.getText();
-		if (bhyt.equals("")) {
-			return null;
-		}
 		return bhyt;
 	}
 	
 	//done
 	public String getEmail(){
 		String e = email.getText();
-		if (e.equals("")) {
-			return null;
-		}
 		return e;
 	}
 	

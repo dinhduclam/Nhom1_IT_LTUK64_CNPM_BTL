@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +13,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
+
+import model.entity.CachLyInfo;
 
 public class UpdateCachLyView {
 
@@ -134,12 +135,12 @@ public class UpdateCachLyView {
 		submit.addActionListener(a);
 	}
 	
-	public void setData(Object[] data){
-		hoTen.setText((String) data[0]);
-		id.setText((String) data[1]);
-		ngayBatDau.setText(data[2].toString());
-		mucDoCachLy.setText("F" + data[3].toString());
-		diaChiCachLy.setText((String) data[4]);
+	public void setData(CachLyInfo cachLyInfo){
+		hoTen.setText(cachLyInfo.getHoTen());
+		id.setText(cachLyInfo.getId());
+		ngayBatDau.setText(cachLyInfo.getNgayBatDau().toString());
+		mucDoCachLy.setText(cachLyInfo.getMucDoCachLy());
+		diaChiCachLy.setText(cachLyInfo.getDiaChiCachLy());
 	}
 	
 	//done
@@ -162,44 +163,25 @@ public class UpdateCachLyView {
 		return cccd;
 	}
 	//done
-	public Date getNgayBatDau() throws Exception{
+	public String getNgayBatDau() throws Exception{
 		String dateString = ngayBatDau.getText();
-		Date date = null;
 
 		if (dateString.equals("")) {
 			ngayBatDau.requestFocus();
 			throw new Exception("Chưa điền Ngày bắt đầu");
 		}
-		else {
-			String[] d = dateString.split("[^0-9]");
-			if (d.length != 3) throw new Exception("Sai định dạng (yyyy/MM/dd)");
-			try {
-				date = Date.valueOf(d[0] + "-" + d[1] + "-" + d[2]);
-			} catch (Exception e) {
-				throw new Exception("Sai định dạng (yyyy/MM/dd)");
-			}
-		}
-		return date;
+
+		return dateString;
 	}
+	
 	//done
-	public int getMucDoCachLy() throws Exception {
+	public String getMucDoCachLy() throws Exception {
 		String f = mucDoCachLy.getText();
 		if (f.equals("")) {
 			mucDoCachLy.requestFocus();
 			throw new Exception("Chưa điền Mức độ cách ly");
 		}
-		else {
-			if (f.charAt(0) != 'f' && f.charAt(0) != 'F') {
-				throw new Exception("Sai định dạng (F1, F2, F3...)");
-			}
-			f = f.substring(1);
-			try {
-				return Integer.parseInt(f);
-			} catch (Exception e) {
-				// TODO: handle exception
-				throw new Exception("Sai định dạng (F1, F2, F3...)");
-			}
-		}
+		return f;
 	}
 	//done
 	public String getDiaChiCachLy() throws Exception {

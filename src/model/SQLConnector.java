@@ -2,7 +2,6 @@ package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class SQLConnector {
 	private static String url = "jdbc:mysql://localhost/ql_covid";
@@ -13,8 +12,14 @@ public class SQLConnector {
 	protected SQLConnector() {
 	}
 	
-	protected static Connection getCon() throws SQLException{
-		con = DriverManager.getConnection(url, user, password);
-		return con;
+	protected static Connection getCon() throws Exception{
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			return con;
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new Exception("Lỗi kết nối database");
+		}
+		
 	}
 }

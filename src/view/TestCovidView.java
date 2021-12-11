@@ -19,7 +19,8 @@ import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controller.TestCovidController;
+import model.NhanKhauModel;
+import model.entity.TestCovidInfo;
 
 public class TestCovidView {
 
@@ -28,7 +29,7 @@ public class TestCovidView {
 	private DefaultTableModel model;
 	private JTextField textFind;
 	private JButton btnAdd, btnUpdate, btnDelete, btnClose;
-	
+	public static final String colName[] = {"Họ tên", "Số hộ chiếu/CCCD", "Mã code", "Kết quả", "Kiểu test", "Ngày test"};
 	public TestCovidView() {
 //		initialize();
 	}
@@ -54,8 +55,8 @@ public class TestCovidView {
 		frame.getContentPane().add(lblNewLabel);
 	
 		
-		JLabel lblNewLabel_1 = new JLabel("Tìm kiếm (Bằng Tên hoặc ID):");
-		lblNewLabel_1.setBounds(483, 338, 172, 35);
+		JLabel lblNewLabel_1 = new JLabel("Tìm kiếm (Bằng Tên, ID hoặc Mã):");
+		lblNewLabel_1.setBounds(468, 338, 187, 35);
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		textFind = new JTextField();
@@ -95,23 +96,34 @@ public class TestCovidView {
 		frame.setVisible(true);
 	}
 	
-	public void setDataForTable(String[] colName, ArrayList<Object[]> data) {
+	public void setDataForTable(ArrayList<TestCovidInfo> data) {
 		model = new DefaultTableModel();
 		model.setColumnIdentifiers(colName);
-		for (Object[] row: data) {
+		for (TestCovidInfo testCovid : data) {
+			Object[] row = {
+				testCovid.getHoTen(),
+				testCovid.getId(),
+				testCovid.getMaCode(),
+				testCovid.getKetQua(),
+				testCovid.getLoaiTest(),
+				testCovid.getNgayTest()
+			};
 			model.addRow(row);
 		}
 		table.setModel(model);
 	}
 	
-	public Object[] getSelectedInfo() throws Exception{
+	public TestCovidInfo getSelectedInfo() throws Exception{
 		int selectedRow = table.getSelectedRow();
 		if (selectedRow == -1) throw new Exception("Chưa chọn thông tin"); 
-		Object[] rowData = new Object[TestCovidController.colName.length];
-		for (int i=0; i<TestCovidController.colName.length; i++) {
-			rowData[i] = table.getValueAt(table.getSelectedRow(), i);
-		}
-		return rowData;
+	
+		return new TestCovidInfo(
+				NhanKhauModel.getNhanKhau(table.getValueAt(table.getSelectedRow(), 1).toString(), table.getValueAt(table.getSelectedRow(), 0).toString()),
+				table.getValueAt(table.getSelectedRow(), 2).toString(),
+				table.getValueAt(table.getSelectedRow(), 3).toString(),
+				table.getValueAt(table.getSelectedRow(), 4).toString(),
+				table.getValueAt(table.getSelectedRow(), 5).toString()
+				);
 	}
 	
 	public String getTextToFind() {

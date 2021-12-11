@@ -62,7 +62,7 @@ public class MainView {
 		dateLable.setBounds(772, 0, 94, 15);
 		panel_2.add(dateLable);
 		
-		btnQLKhaiBaoYTe = new JButton("Quản lý khai báo y tế");
+		btnQLKhaiBaoYTe = new JButton("Quản lý khai báo dịch tễ");
 		btnQLKhaiBaoYTe.setContentAreaFilled(false);
 		btnQLKhaiBaoYTe.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnQLKhaiBaoYTe.setBounds(473, 72, 334, 70);

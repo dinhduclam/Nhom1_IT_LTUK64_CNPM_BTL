@@ -1,134 +1,112 @@
 package model;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
-import controller.TestCovidController;
-import view.TestCovidView;
+import model.entity.SucKhoeInfo;
+import view.SucKhoeView;
 
 public class SucKhoeModel {
-	TestCovidView testCovidView = null; 
-	private static final String databaseName = "ql_test_covid";
-	private final String insertSQL = "INSERT INTO " + databaseName + " VALUE (?, ?, ?, ?, ?)"; 
-	private final String updateSQL = "UPDATE " + databaseName + " SET KetQua = ?, LoaiTest = ?, NgayTest = ? WHERE Id = ?";
+	SucKhoeView sucKhoeView = null; 
+	private static final String databaseName = "ql_suc_khoe";
+//	MaKhaiBao HoTen	Id	Ho	Sot	KhoTho	DauNguoi	MatViGiac	BuonNon	TrieuChungKhac	NgayXuatHien
+//	primary key (maKhaiBao)
+	private final String insertSQL = "INSERT INTO " + databaseName + "(HoTen, Id, Ho, Sot, KhoTho, DauNguoi, MatViGiac, BuonNon, TrieuChungKhac, NgayXuatHien) VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; 
+	private final String updateSQL = "UPDATE " + databaseName + " SET HoTen = ?, Id = ?, Ho = ?, Sot = ?, KhoTho = ?, DauNguoi = ?, MatViGiac = ?, BuonNon = ?, TrieuChungKhac = ?, NgayXuatHien = ? WHERE MaKhaiBao = ?";
 	private final String selectAllSQL = "SELECT * FROM " + databaseName;
-	private final String deleteSQL = "DELETE FROM " + databaseName + " WHERE Id = ? AND NgayTest = ?";
+	private final String deleteSQL = "DELETE FROM " + databaseName + " WHERE MaKhaiBao = ?";
 	
-	public SucKhoeModel(TestCovidView testCovidView) {
-		this.testCovidView = testCovidView;
+	public SucKhoeModel(SucKhoeView sucKhoeView) {
+		this.sucKhoeView = sucKhoeView;
 	}
 	
-	public void insert(Object[] data) throws SQLException{
+	public void insert(SucKhoeInfo sucKhoeInfo) throws Exception{	
 		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(insertSQL);
-		//HoTen	Id	KetQua	LoaiTest	NgayTest	
-		stmt.setString(1, (String) data[0]);
-		stmt.setString(2, (String) data[1]);
-		stmt.setString(3, (String) data[2]);
-		stmt.setString(4, (String) data[3]);
-		stmt.setDate(5, (Date) data[4]);
+		//STT HoTen	Id	Ho	Sot	KhoTho	DauNguoi	MatViGiac	BuonNon	TrieuChungKhac	NgayXuatHien
+		stmt.setString(1, sucKhoeInfo.getHoTen());
+		stmt.setString(2, sucKhoeInfo.getId());
+		stmt.setString(3, sucKhoeInfo.getHo());
+		stmt.setString(4, sucKhoeInfo.getSot());
+		stmt.setString(5, sucKhoeInfo.getKhoTho());
+		stmt.setString(6, sucKhoeInfo.getDauNguoi());
+		stmt.setString(7, sucKhoeInfo.getMatViGiac());
+		stmt.setString(8, sucKhoeInfo.getBuonNon());
+		stmt.setString(9, sucKhoeInfo.getTrieuChungKhac());
+		stmt.setDate(10, sucKhoeInfo.getNgayXuatHien());
 		
-		String name = NhanKhauModel.getHoTen((String)data[1]);
-		if (!name.equals(""))
-			if (!data[0].equals(name)) throw new SQLException("Nhân khẩu có mã CCCD = " + data[1] + " tên là " + name);
-		
-		try {
-			stmt.execute();
-		} catch (SQLIntegrityConstraintViolationException e) {
-			// TODO: handle exception
-			throw new SQLException("Không tồn tại nhân khẩu có CCCD là " + data[1] + " trong dữ liệu nhân khẩu");
-		}
+		stmt.execute();
 		
 		con.close();
-		testCovidView.setDataForTable(TestCovidController.colName, getData(testCovidView.getTextToFind()));
+		sucKhoeView.setDataForTable(getData(sucKhoeView.getTextToFind()));
 	}
 	
-	public void update(Object[] data) throws SQLException{
+	public void update(SucKhoeInfo sucKhoeMoi, SucKhoeInfo sucKhoeCu) throws Exception{
 		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(updateSQL);
-//		HoTen	Id	KetQua	LoaiTest	NgayTest	
+		//MaKhaiBao HoTen	Id	Ho	Sot	KhoTho	DauNguoi	MatViGiac	BuonNon	TrieuChungKhac	NgayXuatHien
 		
-		stmt.setString(4, (String) data[1]);
-		stmt.setString(1, (String) data[2]);
-		stmt.setString(2, (String) data[3]);
-		stmt.setDate(3, (Date) data[4]);
+		stmt.setString(1, sucKhoeMoi.getHoTen());
+		stmt.setString(2, sucKhoeMoi.getId());
+		stmt.setString(3, sucKhoeMoi.getHo());
+		stmt.setString(4, sucKhoeMoi.getSot());
+		stmt.setString(5, sucKhoeMoi.getKhoTho());
+		stmt.setString(6, sucKhoeMoi.getDauNguoi());
+		stmt.setString(7, sucKhoeMoi.getMatViGiac());
+		stmt.setString(8, sucKhoeMoi.getBuonNon());
+		stmt.setString(9, sucKhoeMoi.getTrieuChungKhac());
+		stmt.setDate(10, sucKhoeMoi.getNgayXuatHien());
+		stmt.setInt(11, sucKhoeCu.getMaKhaiBao());
 		stmt.execute();
 		con.close();
-		testCovidView.setDataForTable(TestCovidController.colName, getData(testCovidView.getTextToFind()));
+		sucKhoeView.setDataForTable(getData(sucKhoeView.getTextToFind()));
 	}
 	
-	public void delete(Object[] data) throws SQLException {
+	public void delete(SucKhoeInfo sucKhoeInfo) throws Exception {
 		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(deleteSQL);
-		stmt.setString(1, (String) data[1]);
-		stmt.setDate(2, (Date) data[4]);
+		stmt.setInt(1, sucKhoeInfo.getMaKhaiBao());
 		stmt.execute();
 		con.close();
-		testCovidView.setDataForTable(TestCovidController.colName, getData(testCovidView.getTextToFind()));
+		sucKhoeView.setDataForTable(getData(sucKhoeView.getTextToFind()));
 	}
 	
-	public ArrayList<Object[]> getData(String condition) throws SQLException{
+	public ArrayList<SucKhoeInfo> getData(String condition) throws Exception{
 		String query = selectAllSQL;
-		if (!condition.equals("")) query = selectAllSQL + " WHERE Id LIKE ? OR HoTen LIKE ?";
+		if (!condition.equals("")) query = selectAllSQL + " WHERE Id LIKE ? OR HoTen LIKE ? OR MaKhaiBao LIKE ?";
 		
 		Connection con = SQLConnector.getCon();
 		PreparedStatement stmt = con.prepareStatement(query);
-//		HoTen	Id	KetQua	LoaiTest	NgayTest	
+		//	STT HoTen	Id	Ho	Sot	KhoTho	DauNguoi	MatViGiac	BuonNon	TrieuChungKhac	NgayXuatHien
 		if (!condition.equals("")) {
 			condition = "%" + condition + "%";
 			stmt.setString(1, condition);
 			stmt.setString(2, condition);
+			stmt.setString(3, condition);
 		}
 		ResultSet rs = stmt.executeQuery();
-		ArrayList<Object[]> data = new ArrayList<>();
+		ArrayList<SucKhoeInfo> data = new ArrayList<>();
 		while (rs.next()) {
-//			HoTen	Id	KetQua	LoaiTest	NgayTest	
-			Object[] row = {
-				rs.getString("HoTen"),
-				rs.getString("Id"),
-				rs.getString("KetQua"),
-				rs.getString("LoaiTest"),
-				rs.getDate("NgayTest")
-			};
+			//MaKhaiBao HoTen	Id	Ho	Sot	KhoTho	DauNguoi	MatViGiac	BuonNon	TrieuChungKhac	NgayXuatHien	
+			SucKhoeInfo sucKhoe = new SucKhoeInfo(
+				NhanKhauModel.getNhanKhau(rs.getString("Id"), rs.getString("HoTen")),
+				rs.getInt("MaKhaiBao"),
+				rs.getString("Ho"),
+				rs.getString("Sot"),
+				rs.getString("KhoTho"),
+				rs.getString("DauNguoi"),
+				rs.getString("MatViGiac"),
+				rs.getString("BuonNon"),
+				rs.getString("TrieuChungKhac"),
+				rs.getDate("NgayXuatHien").toString()
+			);
 			
-			data.add(row);
+			data.add(sucKhoe);
 		}
 		con.close();
 		return data;
 	}
-	
-	public static ArrayList<Object[]> getVaccineInfo(String id, String startDate) throws SQLException {
-		String query = "SELECT * FROM " + databaseName + " WHERE Id = ? AND NgayTest >= ?";
-		
-		Connection con = SQLConnector.getCon();
-		PreparedStatement stmt = con.prepareStatement(query);
-//		HoTen	Id	KetQua	LoaiTest	NgayTest
-		stmt.setString(1, id);
-		stmt.setString(2, startDate);
-		ResultSet rs = stmt.executeQuery();
-		ArrayList<Object[]> data = new ArrayList<>();
-		while (rs.next()) {
-//			HoTen	Id	KetQua	LoaiTest	NgayTest	
-			Object[] row = {
-				rs.getString("HoTen"),
-				rs.getString("Id"),
-				rs.getString("KetQua"),
-				rs.getString("LoaiTest"),
-				rs.getDate("NgayTest")
-			};
-			
-			data.add(row);
-		}
-		con.close();
-		return data;
-	}
-
-
-	
 
 }

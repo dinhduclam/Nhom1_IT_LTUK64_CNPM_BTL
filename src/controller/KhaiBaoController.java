@@ -9,30 +9,30 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
 
-import controller.testcovid.AddTestCovidController;
-import controller.testcovid.UpdateTestCovidController;
-import model.TestCovidModel;
-import view.TestCovidView;
+import controller.khaibao.AddKhaiBaoController;
+import controller.khaibao.UpdateKhaiBaoController;
+import model.KhaiBaoModel;
+import view.KhaiBaoView;
 
 /**
  * @author Acer
  *
  */
-public class TestCovidController {
-	private TestCovidView testCovidView = new TestCovidView();
-	private TestCovidModel testCovidModel = new TestCovidModel(testCovidView);
+public class KhaiBaoController {
+	private KhaiBaoView khaiBaoView = new KhaiBaoView();
+	private KhaiBaoModel khaiBaoModel = new KhaiBaoModel(khaiBaoView);
 	
-	public TestCovidController() {
-		testCovidView.initialize();
-		testCovidView.setActionAddButton(new addBtnAction());
-		testCovidView.setActionUpdateButton(new updateBtnAction());
-		testCovidView.setActionDeleteButton(new deleteBtnAction());
-		testCovidView.setKeyListenerFind(new findKeyListener());
+	public KhaiBaoController() {
+		khaiBaoView.initialize();
+		khaiBaoView.setActionAddButton(new addBtnAction());
+		khaiBaoView.setActionUpdateButton(new updateBtnAction());
+		khaiBaoView.setActionDeleteButton(new deleteBtnAction());
+		khaiBaoView.setKeyListenerFind(new findKeyListener());
 		try {
-			testCovidView.setDataForTable(testCovidModel.getData(""));
+			khaiBaoView.setDataForTable(khaiBaoModel.getData(""));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			testCovidView.showMessage(e.getMessage());
+			khaiBaoView.showMessage(e.getMessage());
 		}
 	}
 	
@@ -40,7 +40,7 @@ public class TestCovidController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			new AddTestCovidController(testCovidModel);
+			new AddKhaiBaoController(khaiBaoModel);
 		}
 	}
 	
@@ -49,10 +49,10 @@ public class TestCovidController {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
-				new UpdateTestCovidController(testCovidModel, testCovidView.getSelectedInfo());
+				new UpdateKhaiBaoController(khaiBaoModel, khaiBaoView.getSelectedInfo());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				testCovidView.showMessage(e.getMessage());
+				khaiBaoView.showMessage(e.getMessage());
 			}
 		}
 	}
@@ -61,16 +61,16 @@ public class TestCovidController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-//			testCovidView.getSelectedRow();
+//			KhaiBaoView.getSelectedRow();
 			try {
-				testCovidModel.delete(testCovidView.getSelectedInfo());
-				testCovidView.showMessage("Xóa dữ liệu thành công");
+				khaiBaoModel.delete(khaiBaoView.getSelectedInfo());
+				khaiBaoView.showMessage("Xóa dữ liệu thành công");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				testCovidView.showMessage("Loi databse");
+				khaiBaoView.showMessage("Loi databse");
 			} catch (Exception e1) {
 				// TODO: handle exception
-				testCovidView.showMessage(e1.getMessage());
+				khaiBaoView.showMessage(e1.getMessage());
 			}
 		}
 	}
@@ -87,14 +87,13 @@ public class TestCovidController {
 		public void keyReleased(KeyEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
-				testCovidView.setDataForTable(testCovidModel.getData(testCovidView.getTextToFind()));
+				khaiBaoView.setDataForTable(khaiBaoModel.getData(khaiBaoView.getTextToFind()));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-				testCovidView.showMessage("Loi databse");
+				khaiBaoView.showMessage("Loi databse");
 			} catch (Exception e1) {
 				// TODO: handle exception
-				testCovidView.showMessage(e1.getMessage());
+				khaiBaoView.showMessage(e1.getMessage());
 			}
 		}
 
@@ -105,4 +104,5 @@ public class TestCovidController {
 		}
 		
 	}
+		
 }

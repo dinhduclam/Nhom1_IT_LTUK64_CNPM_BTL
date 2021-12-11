@@ -20,20 +20,18 @@ import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
 import model.NhanKhauModel;
-import model.entity.TiemVaccineInfo;
+import model.entity.KhaiBaoInfo;
 
-public class TiemVaccineView {
+public class KhaiBaoView {
 
 	private JFrame frame;
 	private JTable table;
 	private DefaultTableModel model;
 	private JTextField textFind;
 	private JButton btnAdd, btnUpdate, btnDelete, btnClose;
-	public static final String colName[] = {"Họ tên", "Số hộ chiếu/CCCD", "Lần tiêm", "Loại Vaccine", "Lô vaccine", "Ngày tiêm", "Đơn vị tiêm chủng"};
-	/**
-	 * @wbp.parser.entryPoint
-	 */
-	public TiemVaccineView() {
+	public static final String colName[] = {"Mã khai báo", "Họ tên", "Số hộ chiếu/CCCD", "Tiếp xúc với người bệnh/nghi nhiễm Covid", "Đi về từ vùng dịch", "Tiếp xúc với người đi về từ vùng dịch", "Ngày khai báo"};
+	
+	public KhaiBaoView() {
 //		initialize();
 	}
 
@@ -51,11 +49,16 @@ public class TiemVaccineView {
 		model = new DefaultTableModel();
 		scrollPane.setViewportView(table);
 		
-		JLabel lblNewLabel = new JLabel("QUẢN LÝ TIÊM VACCINE");
+		JLabel lblNewLabel = new JLabel("QUẢN LÝ THÔNG TIN KHAI BÁO DỊCH TỄ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 0, 856, 38);
 		frame.getContentPane().add(lblNewLabel);
+	
+		
+		JLabel lblNewLabel_1 = new JLabel("Tìm kiếm (Bằng Tên, ID hoặc Mã):");
+		lblNewLabel_1.setBounds(468, 338, 187, 35);
+		frame.getContentPane().add(lblNewLabel_1);
 		
 		textFind = new JTextField();
 		textFind.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
@@ -91,42 +94,39 @@ public class TiemVaccineView {
 		});
 		frame.getContentPane().add(btnClose);
 		
-		JLabel lblNewLabel_1 = new JLabel("Tìm kiếm (Bằng Tên hoặc ID):");
-		lblNewLabel_1.setBounds(483, 338, 172, 35);
-		frame.getContentPane().add(lblNewLabel_1);
-		
 		frame.setVisible(true);
 	}
 	
-	public void setDataForTable(ArrayList<TiemVaccineInfo> data) {
+	public void setDataForTable(ArrayList<KhaiBaoInfo> data) {
 		model = new DefaultTableModel();
 		model.setColumnIdentifiers(colName);
-		for (TiemVaccineInfo tiemVaccine: data) {
-			Object row[] = {
-					tiemVaccine.getHoTen(),
-					tiemVaccine.getId(),
-					tiemVaccine.getLanTiem(),
-					tiemVaccine.getLoaiVaccine(),
-					tiemVaccine.getLoVaccine(),
-					tiemVaccine.getNgayTiem(),
-					tiemVaccine.getDonViTiemChung()		
+		for (KhaiBaoInfo khaiBaoInfo: data) {
+			Object[] row = {
+				khaiBaoInfo.getMaKhaiBao(),
+				khaiBaoInfo.getHoTen(),
+				khaiBaoInfo.getId(),
+				khaiBaoInfo.getTiepXucVoiNguoiBenh(),
+				khaiBaoInfo.getDiVeTuVungDich(),
+				khaiBaoInfo.getTiepXucVoiNguoiTuVungDich(),
+				khaiBaoInfo.getNgayKhaiBao()
 			};
+		
 			model.addRow(row);
 		}
 		table.setModel(model);
 	}
 	
-	public TiemVaccineInfo getSelectedInfo() throws Exception{
+	public KhaiBaoInfo getSelectedInfo() throws Exception{
 		int selectedRow = table.getSelectedRow();
-		if (selectedRow == -1) throw new Exception("Chưa chọn thông tin"); 		
-		return new TiemVaccineInfo(
-				NhanKhauModel.getNhanKhau(table.getValueAt(table.getSelectedRow(), 1).toString(), table.getValueAt(table.getSelectedRow(), 0).toString()),
-				(int) table.getValueAt(table.getSelectedRow(), 2),
-				table.getValueAt(table.getSelectedRow(), 3).toString(),
-				table.getValueAt(table.getSelectedRow(), 4).toString(),
-				table.getValueAt(table.getSelectedRow(), 5).toString(),
-				table.getValueAt(table.getSelectedRow(), 6).toString()				
-				);
+		if (selectedRow == -1) throw new Exception("Chưa chọn thông tin"); 
+		return new KhaiBaoInfo(
+				NhanKhauModel.getNhanKhau((String) table.getValueAt(selectedRow, 2), (String) table.getValueAt(selectedRow, 1)),
+				(int) table.getValueAt(selectedRow, 0),
+				table.getValueAt(selectedRow, 3).toString(),
+				table.getValueAt(selectedRow, 4).toString(),
+				table.getValueAt(selectedRow, 5).toString(),
+				table.getValueAt(selectedRow, 6).toString()
+			);
 	}
 	
 	public String getTextToFind() {

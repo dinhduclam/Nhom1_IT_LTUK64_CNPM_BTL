@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -26,6 +25,7 @@ public class AddTestCovidView {
 	private JButton submit;
 	private JTextField ngayTest;
 	private JRadioButton amTinh, duongTinh, testNhanh, testPCR;
+	private JTextField maCode;
 
 	public AddTestCovidView() {
 //		initialize();
@@ -76,11 +76,11 @@ public class AddTestCovidView {
 		frame.getContentPane().add(lblNewLabel_2_1);
 		
 		JLabel lblNewLabel_1_4 = new JLabel("Kết quả:");
-		lblNewLabel_1_4.setBounds(10, 154, 148, 20);
+		lblNewLabel_1_4.setBounds(10, 182, 148, 20);
 		frame.getContentPane().add(lblNewLabel_1_4);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Loại test:");
-		lblNewLabel_1_1_1.setBounds(335, 154, 148, 20);
+		lblNewLabel_1_1_1.setBounds(335, 182, 148, 20);
 		frame.getContentPane().add(lblNewLabel_1_1_1);
 		
 		submit = new JButton("Submit");
@@ -101,22 +101,22 @@ public class AddTestCovidView {
 		frame.getContentPane().add(close);
 		
 		JLabel lblNewLabel_1_4_1 = new JLabel("Ngày test (yyyy/MM/dd):");
-		lblNewLabel_1_4_1.setBounds(10, 210, 148, 20);
+		lblNewLabel_1_4_1.setBounds(335, 152, 148, 20);
 		frame.getContentPane().add(lblNewLabel_1_4_1);
 		
 		ngayTest = new JTextField();
 		ngayTest.setColumns(10);
 		ngayTest.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		ngayTest.setBackground(SystemColor.menu);
-		ngayTest.setBounds(155, 210, 127, 20);
+		ngayTest.setBounds(480, 152, 127, 20);
 		frame.getContentPane().add(ngayTest);
 		
 		amTinh = new JRadioButton("Âm tính");
-		amTinh.setBounds(155, 150, 109, 23);
+		amTinh.setBounds(155, 178, 109, 23);
 		frame.getContentPane().add(amTinh);
 		
 		duongTinh = new JRadioButton("Dương tính");
-		duongTinh.setBounds(155, 176, 109, 23);
+		duongTinh.setBounds(155, 204, 109, 23);
 		frame.getContentPane().add(duongTinh);
 		
 		ButtonGroup kq = new ButtonGroup();
@@ -124,16 +124,27 @@ public class AddTestCovidView {
 		kq.add(duongTinh);
 		
 		testNhanh = new JRadioButton("Test nhanh");
-		testNhanh.setBounds(480, 153, 109, 23);
+		testNhanh.setBounds(480, 181, 109, 23);
 		frame.getContentPane().add(testNhanh);
 		
 		testPCR = new JRadioButton("PCR");
-		testPCR.setBounds(480, 181, 109, 23);
+		testPCR.setBounds(480, 209, 109, 23);
 		frame.getContentPane().add(testPCR);
 		
 		ButtonGroup loaiTest = new ButtonGroup();
 		loaiTest.add(testNhanh);
 		loaiTest.add(testPCR);
+		
+		JLabel lblNewLabel_1_4_1_1 = new JLabel("Mã code:");
+		lblNewLabel_1_4_1_1.setBounds(10, 152, 148, 20);
+		frame.getContentPane().add(lblNewLabel_1_4_1_1);
+		
+		maCode = new JTextField();
+		maCode.setColumns(10);
+		maCode.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		maCode.setBackground(SystemColor.menu);
+		maCode.setBounds(155, 152, 127, 20);
+		frame.getContentPane().add(maCode);
 		
 		frame.setVisible(true);
 		
@@ -146,6 +157,7 @@ public class AddTestCovidView {
 	public void clear() {
 		hoTen.setText("");
 		id.setText("");
+		maCode.setText("");
 		amTinh.setSelected(false);
 		duongTinh.setSelected(false);
 		testNhanh.setSelected(false);
@@ -174,6 +186,15 @@ public class AddTestCovidView {
 		return cccd;
 	}
 	
+	public String getMaCode() throws Exception {
+		String code = maCode.getText();
+		if (code.equals("")) {
+			maCode.requestFocus();
+			throw new Exception("Chưa điền Mã code");
+		}
+		return code;
+	}
+	
 	public String getKetQua() throws Exception {
 		try{
 			if (amTinh.isSelected()) return "Âm tính";
@@ -194,24 +215,14 @@ public class AddTestCovidView {
 		}
 	}
 	
-	public Date getNgayTest() throws Exception{
+	public String getNgayTest() throws Exception{
 		String dateString = ngayTest.getText();
-		Date date = null;
 
 		if (dateString.equals("")) {
 			ngayTest.requestFocus();
 			throw new Exception("Chưa điền Ngày test");
 		}
-		else {
-			String[] d = dateString.split("[^0-9]");
-			if (d.length != 3) throw new Exception("Sai định dạng (yyyy/MM/dd)");
-			try {
-				date = Date.valueOf(d[0] + "-" + d[1] + "-" + d[2]);
-			} catch (Exception e) {
-				throw new Exception("Ngày không hợp lệ (yyyy/MM/dd)");
-			}
-		}
-		return date;
+		return dateString;
 	}
 
 	//done

@@ -10,13 +10,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
+
+import model.entity.CachLyInfo;
+import model.entity.TestCovidInfo;
+import view.TestCovidView;
 
 public class ViewDetailCachLy {
 
@@ -142,18 +146,27 @@ public class ViewDetailCachLy {
 		frame.setVisible(true);
 	}
 	
-	public void setData(Object[] data){
-		hoTen.setText((String) data[0]);
-		id.setText((String) data[1]);
-		ngayBatDau.setText(data[2].toString());
-		mucDoCachLy.setText("F" + data[3].toString());
-		diaChiCachLy.setText((String) data[4]);
+	public void setData(CachLyInfo cachLyInfo){
+		hoTen.setText(cachLyInfo.getHoTen());
+		id.setText(cachLyInfo.getId());
+		ngayBatDau.setText(cachLyInfo.getNgayBatDau().toString());
+		mucDoCachLy.setText(cachLyInfo.getMucDoCachLy());
+		diaChiCachLy.setText(cachLyInfo.getDiaChiCachLy());
+		setDataTestCovid(cachLyInfo.getTestCovid());
 	}
 	
-	public void setDataForTable(String[] colName, ArrayList<Object[]> data) {
+	public void setDataTestCovid(ArrayList<TestCovidInfo> data) {
 		model = new DefaultTableModel();
-		model.setColumnIdentifiers(colName);
-		for (Object[] row: data) {
+		model.setColumnIdentifiers(TestCovidView.colName);
+		for (TestCovidInfo testCovid : data) {
+			Object[] row = {
+				testCovid.getHoTen(),
+				testCovid.getId(),
+				testCovid.getMaCode(),
+				testCovid.getKetQua(),
+				testCovid.getLoaiTest(),
+				testCovid.getNgayTest()
+			};
 			model.addRow(row);
 		}
 		table.setModel(model);

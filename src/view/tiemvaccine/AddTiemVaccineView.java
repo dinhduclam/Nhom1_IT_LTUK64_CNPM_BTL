@@ -1,11 +1,10 @@
-package view.tiemvaccine;
+ package view.tiemvaccine;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -206,24 +205,15 @@ public class AddTiemVaccineView {
 		return loVaccine.getText();
 	}
 	
-	public Date getNgayTiem() throws Exception {
+	public String getNgayTiem() throws Exception {
 		String dateString = ngayTiem.getText();
-		Date date = null;
 
 		if (dateString.equals("")) {
 			ngayTiem.requestFocus();
 			throw new Exception("Chưa điền Ngày tiêm");
 		}
-		else {
-			String[] d = dateString.split("[^0-9]");
-			if (d.length != 3) throw new Exception("Sai định dạng (yyyy/MM/dd)");
-			try {
-				date = Date.valueOf(d[0] + "-" + d[1] + "-" + d[2]);
-			} catch (Exception e) {
-				throw new Exception("Ngày không hợp lệ (yyyy/MM/dd)");
-			}
-		}
-		return date;
+		
+		return dateString;
 	}
 	
 	//done
@@ -238,9 +228,5 @@ public class AddTiemVaccineView {
 	//done
 	public void showMessage(String message) {
 		JOptionPane.showMessageDialog(frame, message);
-	}
-	
-	public static void main(String[] args) {
-		new AddTiemVaccineView();
 	}
 }

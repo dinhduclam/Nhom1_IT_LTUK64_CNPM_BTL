@@ -2,9 +2,10 @@ package controller.cachly;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 import model.CachLyModel;
+import model.NhanKhauModel;
+import model.entity.CachLyInfo;
 import view.cach_ly.AddCachLyView;
 
 public class AddCachLyController {
@@ -22,14 +23,14 @@ public class AddCachLyController {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
-				Object[] data = {
-					addCachLyView.getHoTen(),
-					addCachLyView.getId(),
+				CachLyInfo cachLyInfo = new CachLyInfo(
+					NhanKhauModel.getNhanKhau(addCachLyView.getId(), addCachLyView.getHoTen()),
 					addCachLyView.getNgayBatDau(),
 					addCachLyView.getMucDoCachLy(),
 					addCachLyView.getDiaChiCachLy()
-				};
-				cachLyModel.insert(data);
+				);
+				cachLyModel.insert(cachLyInfo);
+				addCachLyView.showMessage("Thêm dữ liệu thành công");
 				addCachLyView.clear();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

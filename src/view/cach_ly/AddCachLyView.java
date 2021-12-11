@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -128,6 +127,16 @@ public class AddCachLyView {
 	public void setActionSubmitButton(ActionListener a) {
 		submit.addActionListener(a);
 	}
+	
+	public void clear() {
+		hoTen.setText("");
+		id.setText("");
+		ngayBatDau.setText("");
+		mucDoCachLy.setText("");
+		diaChiCachLy.setText("");
+		hoTen.requestFocus();
+	}
+	
 	//done
 	public String getHoTen() throws Exception{
 		String name = hoTen.getText();
@@ -148,53 +157,25 @@ public class AddCachLyView {
 		return cccd;
 	}
 	//done
-	public Date getNgayBatDau() throws Exception{
+	public String getNgayBatDau() throws Exception{
 		String dateString = ngayBatDau.getText();
-		Date date = null;
 
 		if (dateString.equals("")) {
 			ngayBatDau.requestFocus();
 			throw new Exception("Chưa điền Ngày bắt đầu");
 		}
-		else {
-			String[] d = dateString.split("[^0-9]");
-			if (d.length != 3) throw new Exception("Sai định dạng (yyyy/MM/dd)");
-			try {
-				date = Date.valueOf(d[0] + "-" + d[1] + "-" + d[2]);
-			} catch (Exception e) {
-				throw new Exception("Ngày không hợp lệ (yyyy/MM/dd)");
-			}
-		}
-		return date;
+
+		return dateString;
 	}
 	
-	public void clear() {
-		hoTen.setText("");
-		id.setText("");
-		ngayBatDau.setText("");
-		mucDoCachLy.setText("");
-		diaChiCachLy.setText("");
-		hoTen.requestFocus();
-	}
 	//done
-	public int getMucDoCachLy() throws Exception {
+	public String getMucDoCachLy() throws Exception {
 		String f = mucDoCachLy.getText();
 		if (f.equals("")) {
 			mucDoCachLy.requestFocus();
 			throw new Exception("Chưa điền Mức độ cách ly");
 		}
-		else {
-			if (f.charAt(0) != 'f' && f.charAt(0) != 'F') {
-				throw new Exception("Sai định dạng (F1, F2, F3...)");
-			}
-			f = f.substring(1);
-			try {
-				return Integer.parseInt(f);
-			} catch (Exception e) {
-				// TODO: handle exception
-				throw new Exception("Sai định dạng (F1, F2, F3...)");
-			}
-		}
+		return f;
 	}
 	//done
 	public String getDiaChiCachLy() throws Exception {

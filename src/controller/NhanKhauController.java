@@ -15,8 +15,6 @@ public class NhanKhauController {
 	private NhanKhauView nhanKhauView = new NhanKhauView();
 	private NhanKhauModel nhanKhauModel = new NhanKhauModel(nhanKhauView);
 	
-	public static final String colName[] = {"Họ tên", "Số hộ chiếu/CCCD", "Giới tính", "Ngày sinh", "Số điện thoại", "Số thẻ BHYT", "Email", "Quốc tịch", "Thường trú/Tạm trú"};
-	
 	public NhanKhauController() {
 		nhanKhauView.initialize();
 		nhanKhauView.setActionAddButton(new addBtnAction());
@@ -24,10 +22,9 @@ public class NhanKhauController {
 		nhanKhauView.setActionDeleteButton(new deleteBtnAction());
 		nhanKhauView.setKeyListenerFind(new findKeyListener());
 		try {
-			nhanKhauView.setDataForTable(colName, nhanKhauModel.getData(""));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			nhanKhauView.showMessage("Lỗi kết nối database");
+			nhanKhauView.setDataForTable(nhanKhauModel.getData(""));
+		} catch (Exception e){
+			nhanKhauView.showMessage(e.getMessage());
 		}
 	}
 	
@@ -57,13 +54,11 @@ public class NhanKhauController {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
-				nhanKhauModel.delete((String) nhanKhauView.getSelectedInfo()[1]);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				nhanKhauView.showMessage("Loi databse");
-			} catch (Exception e1) {
+				nhanKhauModel.delete(nhanKhauView.getSelectedInfo());
+				nhanKhauView.showMessage("Xóa dữ liệu thành công");
+			} catch (Exception e) {
 				// TODO: handle exception
-				nhanKhauView.showMessage(e1.getMessage());
+				nhanKhauView.showMessage(e.getMessage());
 			}
 		}
 	}
@@ -80,10 +75,9 @@ public class NhanKhauController {
 		public void keyReleased(KeyEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
-				nhanKhauView.setDataForTable(colName, nhanKhauModel.getData(nhanKhauView.getTextToFind()));
+				nhanKhauView.setDataForTable(nhanKhauModel.getData(nhanKhauView.getTextToFind()));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 				nhanKhauView.showMessage("Loi databse");
 			} catch (Exception e1) {
 				// TODO: handle exception

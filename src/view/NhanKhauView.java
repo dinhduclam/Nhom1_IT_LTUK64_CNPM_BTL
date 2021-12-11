@@ -19,7 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controller.NhanKhauController;
+import model.entity.NhanKhauInfo;
 
 public class NhanKhauView {
 
@@ -28,6 +28,7 @@ public class NhanKhauView {
 	private DefaultTableModel model;
 	private JTextField textFind;
 	private JButton btnAdd, btnUpdate, btnDelete, btnClose;
+	public static final String colName[] = {"Họ tên", "Số hộ chiếu/CCCD", "Giới tính", "Ngày sinh", "Số điện thoại", "Số thẻ BHYT", "Email", "Quốc tịch", "Thường trú/Tạm trú"};
 	
 	/**
 	 * @wbp.parser.entryPoint
@@ -97,23 +98,40 @@ public class NhanKhauView {
 		frame.setVisible(true);
 	}
 	
-	public void setDataForTable(String[] colName, ArrayList<Object[]> data) {
+	public void setDataForTable(ArrayList<NhanKhauInfo> data) {
 		model = new DefaultTableModel();
 		model.setColumnIdentifiers(colName);
-		for (Object[] row: data) {
+		for (NhanKhauInfo nhanKhau: data) {
+			Object[] row = {
+				nhanKhau.getHoTen(),
+				nhanKhau.getId(),
+				nhanKhau.getGioiTinh(),
+				nhanKhau.getNgaySinh(),
+				nhanKhau.getSoDienThoai(),
+				nhanKhau.getSoTheBHYT(),
+				nhanKhau.getEmail(),
+				nhanKhau.getQuocTich(),
+				nhanKhau.getThuongTruTamTru()
+			};
 			model.addRow(row);
 		}
 		table.setModel(model);
 	}
 	
-	public Object[] getSelectedInfo() throws Exception{
+	public NhanKhauInfo getSelectedInfo() throws Exception{
 		int selectedRow = table.getSelectedRow();
 		if (selectedRow == -1) throw new Exception("Chưa chọn thông tin"); 
-		Object[] rowData = new Object[NhanKhauController.colName.length];
-		for (int i=0; i<NhanKhauController.colName.length; i++) {
-			rowData[i] = table.getValueAt(table.getSelectedRow(), i);
-		}
-		return rowData;
+		return new NhanKhauInfo(
+				table.getValueAt(selectedRow, 0).toString(),
+				table.getValueAt(selectedRow, 1).toString(),
+				table.getValueAt(selectedRow, 2).toString(),
+				table.getValueAt(selectedRow, 3).toString(),
+				table.getValueAt(selectedRow, 4).toString(),
+				table.getValueAt(selectedRow, 5).toString(),
+				table.getValueAt(selectedRow, 6).toString(),
+				table.getValueAt(selectedRow, 7).toString(),
+				table.getValueAt(selectedRow, 8).toString()
+			);
 	}
 	
 	public String getTextToFind() {

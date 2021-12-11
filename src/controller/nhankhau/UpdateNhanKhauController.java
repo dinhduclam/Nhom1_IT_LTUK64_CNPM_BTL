@@ -2,19 +2,21 @@ package controller.nhankhau;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 import model.NhanKhauModel;
+import model.entity.NhanKhauInfo;
 import view.nhankhau.UpdateNhanKhauView;
 
 public class UpdateNhanKhauController {
 	UpdateNhanKhauView updateNhanKhauView = new UpdateNhanKhauView();
 	NhanKhauModel nhanKhauModel = null;
+	NhanKhauInfo nhanKhauCu;
 	
-	public UpdateNhanKhauController(NhanKhauModel nhanKhauModel, Object[] data) {
+	public UpdateNhanKhauController(NhanKhauModel nhanKhauModel, NhanKhauInfo nhanKhauCu) {
 		this.nhanKhauModel = nhanKhauModel;
+		this.nhanKhauCu = nhanKhauCu;
 		updateNhanKhauView.initialize();
-		updateNhanKhauView.setData(data);
+		updateNhanKhauView.setData(nhanKhauCu);
 		updateNhanKhauView.setActionSubmitButton(new updateTTNhanKhau());
 	}
 	
@@ -23,17 +25,19 @@ public class UpdateNhanKhauController {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			try {
-				String name = updateNhanKhauView.getHoTen();
-				String id = updateNhanKhauView.getId();
-				String sex = updateNhanKhauView.getGioiTinh();
-				Date ngaySinh = updateNhanKhauView.getNgaySinh();
-				String phoneNumber = updateNhanKhauView.getSoDienThoai();
-				String bhyt = updateNhanKhauView.getSoBHYT();
-				String email = updateNhanKhauView.getEmail();
-				String nation = updateNhanKhauView.getQuocTich();
-				String stay = updateNhanKhauView.getThuongTruTamTru();
-				Object[] data = {name, id, sex, ngaySinh, phoneNumber, bhyt, email, nation, stay};
-				nhanKhauModel.update(data);
+				NhanKhauInfo nhanKhauMoi = new NhanKhauInfo(
+					updateNhanKhauView.getHoTen(),
+					updateNhanKhauView.getId(),
+					updateNhanKhauView.getGioiTinh(),
+					updateNhanKhauView.getNgaySinh(),
+					updateNhanKhauView.getSoDienThoai(),
+					updateNhanKhauView.getSoTheBHYT(),
+					updateNhanKhauView.getEmail(),
+					updateNhanKhauView.getQuocTich(),
+					updateNhanKhauView.getThuongTruTamTru()
+				);
+				nhanKhauModel.update(nhanKhauMoi, nhanKhauCu);
+				updateNhanKhauView.showMessage("Cập nhật dữ liệu thành công");
 				updateNhanKhauView.dispose();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
