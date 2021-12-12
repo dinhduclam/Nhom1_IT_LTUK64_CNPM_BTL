@@ -151,6 +151,7 @@ public class AddTiemVaccineView {
 		loaiVaccine.addItem("Abdala");
 		loaiVaccine.addItem("Janssen");
 		
+		frame.getRootPane().setDefaultButton(submit);
 		frame.setVisible(true);
 	}
 	//done

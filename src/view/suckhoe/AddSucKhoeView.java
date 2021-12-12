@@ -211,6 +211,7 @@ public class AddSucKhoeView {
 		trieuChungKhac.setBounds(192, 239, 415, 20);
 		frame.getContentPane().add(trieuChungKhac);
 		
+		frame.getRootPane().setDefaultButton(submit);
 		frame.setVisible(true);
 		
 	}

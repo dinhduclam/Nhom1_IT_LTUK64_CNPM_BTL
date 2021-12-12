@@ -153,6 +153,7 @@ public class UpdateKhaiBaoView {
 		lblNewLabel_1_4_1_1_1_1.setBounds(10, 210, 401, 20);
 		frame.getContentPane().add(lblNewLabel_1_4_1_1_1_1);
 		
+		frame.getRootPane().setDefaultButton(submit);
 		frame.setVisible(true);
 	}
 	//done

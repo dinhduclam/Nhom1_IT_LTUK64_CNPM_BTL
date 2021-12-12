@@ -121,6 +121,7 @@ public class AddCachLyView {
 			}
 		});
 		frame.getContentPane().add(close);
+		frame.getRootPane().setDefaultButton(submit);
 		frame.setVisible(true);
 	}
 	//done

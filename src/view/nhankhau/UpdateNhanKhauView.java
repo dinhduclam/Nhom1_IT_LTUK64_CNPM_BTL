@@ -176,7 +176,7 @@ public class UpdateNhanKhauView {
 		thuongTruTamTru.setBounds(155, 180, 452, 20);
 		frame.getContentPane().add(thuongTruTamTru);
 		
-		
+		frame.getRootPane().setDefaultButton(submit);
 		frame.setVisible(true);
 	}
 	//done

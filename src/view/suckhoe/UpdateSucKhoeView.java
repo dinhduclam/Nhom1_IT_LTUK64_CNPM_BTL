@@ -222,6 +222,7 @@ public class UpdateSucKhoeView {
 		maKhaiBao.setBounds(265, 127, 46, 14);
 		frame.getContentPane().add(maKhaiBao);
 		
+		frame.getRootPane().setDefaultButton(submit);
 		frame.setVisible(true);
 		
 	}

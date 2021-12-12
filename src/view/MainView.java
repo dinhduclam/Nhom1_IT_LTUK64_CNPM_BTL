@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,7 +19,7 @@ public class MainView {
 
 	private JFrame frame;
 	private JButton btnQLNhanKhau, btnQLKhaiBaoYTe, btnQLSucKhoe, btnQLCachLy, btnQLTestCovid, btnQLTiemVaccine, btnThongKe;
-	
+	private JLabel username;
 	
 	public MainView() {
 //		initialize();
@@ -47,9 +50,9 @@ public class MainView {
 		frame.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel userInfoLabel = new JLabel("user: lam");
+		JLabel userInfoLabel = new JLabel("user: ");
 		userInfoLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		userInfoLabel.setBounds(10, 0, 151, 14);
+		userInfoLabel.setBounds(10, 0, 39, 14);
 		panel_2.add(userInfoLabel);
 		
 		JLabel lblNewLabel_2 = new JLabel("Phần mềm quản lý thông tin tổ dân cư | Tổ dân phố số 7 | Phường La Khê");
@@ -57,10 +60,17 @@ public class MainView {
 		lblNewLabel_2.setBounds(246, -1, 435, 16);
 		panel_2.add(lblNewLabel_2);
 		
-		JLabel dateLable = new JLabel("25/11/2021");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		Date date = new Date();
+
+		JLabel dateLable = new JLabel(dateFormat.format(date));
 		dateLable.setHorizontalAlignment(SwingConstants.RIGHT);
 		dateLable.setBounds(772, 0, 94, 15);
 		panel_2.add(dateLable);
+		
+		username = new JLabel("");
+		username.setBounds(48, 0, 76, 14);
+		panel_2.add(username);
 		
 		btnQLKhaiBaoYTe = new JButton("Quản lý khai báo dịch tễ");
 		btnQLKhaiBaoYTe.setContentAreaFilled(false);
@@ -104,6 +114,10 @@ public class MainView {
 		btnQLNhanKhau.setBounds(74, 72, 334, 70);
 		frame.getContentPane().add(btnQLNhanKhau);
 		frame.setVisible(true);
+	}
+	
+	public void setUsername(String username) {
+		this.username.setText(username);
 	}
 	
 	public void setActionNhanKhau(ActionListener action) {

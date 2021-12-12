@@ -146,6 +146,7 @@ public class AddTestCovidView {
 		maCode.setBounds(155, 152, 127, 20);
 		frame.getContentPane().add(maCode);
 		
+		frame.getRootPane().setDefaultButton(submit);
 		frame.setVisible(true);
 		
 	}

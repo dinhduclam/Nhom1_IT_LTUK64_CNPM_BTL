@@ -153,6 +153,7 @@ public class UpdateTiemVaccineView {
 		loaiVaccine.addItem("Abdala");
 		loaiVaccine.addItem("Janssen");
 		
+		frame.getRootPane().setDefaultButton(submit);
 		frame.setVisible(true);
 	}
 	//done
