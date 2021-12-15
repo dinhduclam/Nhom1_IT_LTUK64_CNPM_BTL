@@ -171,8 +171,4 @@ public class ThongKeView {
 	public void showMessage(String message) {
 		JOptionPane.showMessageDialog(frame, message);
 	}
-	
-	public static void main(String[] args) {
-		new ThongKeView();
-	}
 }
