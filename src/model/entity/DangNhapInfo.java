@@ -8,8 +8,9 @@ public class DangNhapInfo {
 	private String QLTestCovid= null;
 	private String QLTiemVaccine= null;
 	private String QLCachLy= null;
+	private String ThongKe = null;
 	public DangNhapInfo(String username, String QLNhanKhau, String QLKhaiBao, String QLSucKhoe,
-			String QLTestCovid, String QLTiemVaccine, String QLCachLy) {
+			String QLTestCovid, String QLTiemVaccine, String QLCachLy, String ThongKe) {
 		this.username = username;
 		this.QLNhanKhau = QLNhanKhau;
 		this.QLKhaiBao = QLKhaiBao;
@@ -17,6 +18,7 @@ public class DangNhapInfo {
 		this.QLTestCovid = QLTestCovid;
 		this.QLTiemVaccine = QLTiemVaccine;
 		this.QLCachLy = QLCachLy;
+		this.ThongKe = ThongKe;
 	}
 	public DangNhapInfo() {
 		
@@ -62,6 +64,12 @@ public class DangNhapInfo {
 	}
 	public void setQLCachLy(String QLCachLy) {
 		this.QLCachLy = QLCachLy;
+	}
+	public String getThongKe() {
+		return ThongKe;
+	}
+	public void setThongKe(String ThongKe) {
+		this.ThongKe = ThongKe;
 	}
 
 }

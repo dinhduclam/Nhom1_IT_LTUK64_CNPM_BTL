@@ -30,6 +30,7 @@ public class DangNhapModel {
 			user.setQLSucKhoe(rs.getString("QLSucKhoe"));
 			user.setQLTestCovid(rs.getString("QLTestCovid"));
 			user.setQLTiemVaccine(rs.getString("QLTiemVaccine"));
+			user.setThongKe(rs.getString("ThongKeCovid"));
 			con.close();
 			return user;
 		}

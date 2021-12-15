@@ -91,7 +91,9 @@ public class MainController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			mainView.showMessage("Chức năng này chưa hoàn thành");
+			if (user.getThongKe().equals("Y")) 
+				new ThongKeController();
+			else mainView.showMessage("Bạn không có quyền truy cập vào chức năng này");
 			
 		}
 	}
