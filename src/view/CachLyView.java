@@ -29,7 +29,7 @@ public class CachLyView {
 	private DefaultTableModel model;
 	private JTextField textFind;
 	private JButton btnAdd, btnUpdate, btnDelete, btnClose, btnView;
-	public static final String colName[] = {"Họ tên", "Số hộ chiếu/CCCD", "Ngày bắt đầu", "Mức độ cách ly", "Địa chỉ cách ly", "Test Covid"};
+	public static final String colName[] = {"Họ tên", "Số hộ chiếu/CCCD", "Ngày bắt đầu", "Mức độ cách ly", "Địa chỉ cách ly", "Số lần test Covid"};
 	/**
 	 * @wbp.parser.entryPoint
 	 */
@@ -83,6 +83,7 @@ public class CachLyView {
 		btnClose.setContentAreaFilled(false);
 		btnClose.setBounds(743, 405, 123, 38);
 		btnClose.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
@@ -113,7 +114,7 @@ public class CachLyView {
 				cachLyInfo.getNgayBatDau(),
 				cachLyInfo.getMucDoCachLy(),
 				cachLyInfo.getDiaChiCachLy(),
-				cachLyInfo.getTestCovid().size() > 0 ? "Đã test" : "Chưa test"
+				cachLyInfo.getTestCovid().size()
 			};
 			model.addRow(row);
 		}

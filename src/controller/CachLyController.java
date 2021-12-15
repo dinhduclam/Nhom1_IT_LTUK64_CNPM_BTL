@@ -23,14 +23,13 @@ import view.cach_ly.ViewDetailCachLy;
 public class CachLyController {
 	private CachLyView cachLyView = new CachLyView();
 	private CachLyModel cachLyModel = new CachLyModel(cachLyView);
-	
 	public CachLyController() {
 		cachLyView.initialize();
-		cachLyView.setActionAddButton(new addBtnAction());
-		cachLyView.setActionUpdateButton(new updateBtnAction());
-		cachLyView.setActionDeleteButton(new deleteBtnAction());
-		cachLyView.setActionViewButton(new viewDetailAction());
-		cachLyView.setKeyListenerFind(new findKeyListener());
+		cachLyView.setActionAddButton(new AddBtnAction());
+		cachLyView.setActionUpdateButton(new UpdateBtnAction());
+		cachLyView.setActionDeleteButton(new DeleteBtnAction());
+		cachLyView.setActionViewButton(new ViewDetailAction());
+		cachLyView.setKeyListenerFind(new FindKeyListener());
 		try {
 			cachLyView.setDataForTable(cachLyModel.getData(cachLyView.getTextToFind()));
 		} catch (Exception e) {
@@ -39,7 +38,7 @@ public class CachLyController {
 		}
 	}
 	
-	class addBtnAction implements ActionListener {
+	class AddBtnAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
@@ -47,7 +46,7 @@ public class CachLyController {
 		}
 	}
 	
-	class updateBtnAction implements ActionListener {
+	class UpdateBtnAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
@@ -60,7 +59,7 @@ public class CachLyController {
 		}
 	}
 	
-	class viewDetailAction implements ActionListener {
+	class ViewDetailAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -77,7 +76,7 @@ public class CachLyController {
 		
 	}
 	
-	class deleteBtnAction implements ActionListener {
+	class DeleteBtnAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
@@ -94,7 +93,7 @@ public class CachLyController {
 		}
 	}
 	
-	class findKeyListener implements KeyListener {
+	class FindKeyListener implements KeyListener {
 
 		@Override
 		public void keyPressed(KeyEvent arg0) {

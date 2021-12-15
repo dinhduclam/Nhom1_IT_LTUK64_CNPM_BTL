@@ -155,7 +155,7 @@ public class ViewDetailCachLy {
 		setDataTestCovid(cachLyInfo.getTestCovid());
 	}
 	
-	public void setDataTestCovid(ArrayList<TestCovidInfo> data) {
+	private void setDataTestCovid(ArrayList<TestCovidInfo> data) {
 		model = new DefaultTableModel();
 		model.setColumnIdentifiers(TestCovidView.colName);
 		for (TestCovidInfo testCovid : data) {

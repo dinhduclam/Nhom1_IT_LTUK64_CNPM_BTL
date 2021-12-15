@@ -12,6 +12,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
+import javax.swing.SwingConstants;
 
 public class DangNhapView {
 
@@ -27,40 +28,46 @@ public class DangNhapView {
 
 	public void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 358, 293);
+		frame.setBounds(100, 100, 484, 327);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("\u0110\u0102NG NH\u1EACP");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
-		lblNewLabel.setBounds(24, 22, 284, 57);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 28));
+		lblNewLabel.setBounds(10, 22, 448, 57);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("T\u00EAn \u0111\u0103ng nh\u1EADp:");
-		lblNewLabel_1.setBounds(22, 101, 122, 22);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1.setBounds(68, 102, 122, 22);
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		username = new JTextField();
+		username.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		username.setBackground(UIManager.getColor("TextField.disabledBackground"));
 		username.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		username.setBounds(142, 102, 166, 21);
+		username.setBounds(231, 102, 166, 21);
 		frame.getContentPane().add(username);
 		username.setColumns(10);
 		
 		lblNewLabel_2 = new JLabel("M\u1EADt kh\u1EA9u:");
-		lblNewLabel_2.setBounds(22, 134, 122, 22);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_2.setBounds(68, 135, 122, 22);
 		frame.getContentPane().add(lblNewLabel_2);
 		
 		password = new JPasswordField();
+		password.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		password.setBackground(UIManager.getColor("TextField.disabledBackground"));
 		password.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		password.setColumns(10);
-		password.setBounds(142, 135, 166, 21);
+		password.setBounds(231, 135, 166, 21);
 		frame.getContentPane().add(password);
 		
 		submit = new JButton("Submit");
+		submit.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		submit.setContentAreaFilled(false);
-		submit.setBounds(197, 192, 111, 32);
+		submit.setBounds(171, 203, 122, 38);
 		frame.getContentPane().add(submit);
 		
 		frame.getRootPane().setDefaultButton(submit);

@@ -144,4 +144,10 @@ public class MainView {
 	public void showMessage(String message) {
 		JOptionPane.showMessageDialog(frame, message);
 	}
+	public void hide() {
+		frame.setVisible(false);
+	}
+	public void show() {
+		frame.setVisible(true);
+	}
 }

@@ -31,8 +31,8 @@ public class DangNhapController {
 					DangNhapInfo user = dangNhapModel.getUser(username, password);
 					if (user == null) dangNhapView.showMessage("Tên đăng nhập hoặc mật khẩu không đúng");
 					else {
-						new MainController(user);
 						dangNhapView.dispose();
+						new MainController(user);
 					}
 				}
 			} catch (Exception e) {
@@ -40,20 +40,5 @@ public class DangNhapController {
 				dangNhapView.showMessage(e.getMessage());
 			}
 		}
-	}
-	public void checkKyTuCamTenDangNhap() {
-		if(dangNhapView.getUsername().contains("&"))dangNhapView.showMessage(" Tên đăng nhập chứa ký tự cấm");
-		if(dangNhapView.getUsername().contains("="))dangNhapView.showMessage(" Tên đăng nhập chứa ký tự cấm");
-		if(dangNhapView.getUsername().contains("_"))dangNhapView.showMessage(" Tên đăng nhập chứa ký tự cấm");
-		if(dangNhapView.getUsername().contains("'"))dangNhapView.showMessage(" Tên đăng nhập chứa ký tự cấm");
-		if(dangNhapView.getUsername().contains("+"))dangNhapView.showMessage(" Tên đăng nhập chứa ký tự cấm");
-		if(dangNhapView.getUsername().contains("-"))dangNhapView.showMessage(" Tên đăng nhập chứa ký tự cấm");
-		if(dangNhapView.getUsername().contains(","))dangNhapView.showMessage(" Tên đăng nhập chứa ký tự cấm");
-		if(dangNhapView.getUsername().contains(".."))dangNhapView.showMessage(" Tên đăng nhập chứa ký tự cấm");
-		if(dangNhapView.getUsername().contains("<"))dangNhapView.showMessage(" Tên đăng nhập chứa ký tự cấm");
-		if(dangNhapView.getUsername().contains(">"))dangNhapView.showMessage(" Tên đăng nhập chứa ký tự cấm");
-}
-	public static void main(String[] args) {
-		new DangNhapController();
 	}
 }
